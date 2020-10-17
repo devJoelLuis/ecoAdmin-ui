@@ -1,0 +1,56 @@
+.contColorNovo {
+  background-color: rgb(203, 222, 247);
+  padding: 20px;
+}
+.contColorEdit {
+  background-color: rgb(243, 236, 176);
+  padding: 20px;
+}
+#titulo {
+  font-weight: 300;
+}
+#radio-despesa {
+  margin-left: 50px;
+}
+#radio-pago {
+  margin-left: 50px;
+}
+#vencimento-over {
+  width: 150px !important;
+  height: 30px !important;
+}
+#lb-restante {
+  font-size: 13px;
+}
+.top15 {
+  margin-top: 15px;
+}
+#btn-salvar {
+  margin-right: 20px;
+}
+#btn-nv-cat {
+  margin-left: 5px;
+  display: inline;
+}
+.drop-cat {
+  display: inline;
+}
+.btnOp {
+  margin-right: 10px;
+}
+.btn-categoria {
+  width: 120px;
+  margin-right: 10px;
+}
+
+
+@media screen and (max-width: 767px) {
+
+  .top20screen {
+    margin-top: 20px;
+  }
+  .txtarea {
+    margin-top: 20px;
+  }
+
+}

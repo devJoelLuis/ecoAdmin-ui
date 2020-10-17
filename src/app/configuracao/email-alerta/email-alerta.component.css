@@ -1,0 +1,15 @@
+.tabela {
+  width: 98%;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+.col-acao {
+  width: 120px;
+}
+.center {
+  text-align: center;
+}
+#btn-edit {
+  margin-right: 10px;
+}

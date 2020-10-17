@@ -1,0 +1,129 @@
+<div class="container-cliente-gerencia bg-color alturaMinima">
+
+
+  <!-- informações do cliente selecionado-->
+  <p-button  icon="fa fa-arrow-left" (click)="voltarPagina()" label="Voltar" ></p-button>
+
+
+
+ <div class="form-group" >
+ <div class="row painel">
+     <div class="col-12 col-md-6">
+        <div><label>Cliente Nome:</label></div>
+        <input type="text"   [(ngModel)]="cliente.nome"
+        class="form-control form-control-sm" name="nome"  disabled="true"/>
+     </div>
+     <div class="col-12 col-md-6">
+
+         <div><label>Cliente nome fantasia:</label></div>
+         <input type="text"  [(ngModel)]="cliente.nomeFantasia"
+         class="form-control form-control-sm" name="nomef" disabled="true"/>
+
+     </div>
+ </div>
+
+
+
+ </div>
+
+
+    <p-tabView>
+        <p-tabPanel header="Cliente Info" >
+            
+             <fieldset style="padding: 10px 5px 10px 5px;">
+                <div class="row">
+                    <div class="col-12 center">
+                        <h5>DADOS DO CLIENTE:</h5>
+                    </div>
+                </div>
+                 <div class="divflex">
+                     <div class=" painel-info">
+                        <strong>TELEFONES:</strong> {{ cliente.telefone }}  
+                    </div>
+                    <div class=" painel-info">
+                        <strong>CELULAR:</strong> {{ cliente.celular }}  
+                    </div>
+                 </div>
+                 <div class="divflex">
+                    <div class=" painel-info">
+                        <strong>EMAIL:</strong> {{ cliente.email }}
+                      </div>
+                    <div class="painel-info">
+                        <strong>CNJP:</strong> {{ cliente.cnpj }} 
+                    </div> 
+                 </div>
+                 <div class="divflex">
+                    <div class=" painel-info">
+                        <strong>RG:</strong> {{ cliente.rg }}
+                      </div>
+                    <div class="painel-info">
+                        <strong>DATA CADASTRO:</strong> {{ cliente.dataCadastro | date: 'dd/MM/yyyy' }} 
+                    </div> 
+                 </div>
+                 <div class="divflex">
+                    <div class="painel-info">
+                        <strong>OBS:</strong> {{ cliente.obs }} 
+                    </div>
+                 </div>
+                 <hr />
+                 <div class="row">
+                     <div class="col-12 center">
+                         <h5>INFORMAÇÕES DO ENDEREÇO:</h5>
+                     </div>
+                 </div>
+                 <div class="divflex">
+                    <div class=" painel-info">
+                        <strong>RUA:</strong> {{ cliente.rua }}
+                      </div>
+                    <div class="painel-info">
+                        <strong>NÚMERO:</strong> {{ cliente.numero }} 
+                    </div> 
+                    <div class="painel-info">
+                        <strong>CEP:</strong> {{ cliente.cep }} 
+                    </div> 
+                 </div>
+                 <div class="divflex">
+                    <div class=" painel-info">
+                        <strong>BAIRRO:</strong> {{ cliente.bairro }}
+                      </div>
+                    <div class="painel-info">
+                        <strong>CIDADE:</strong> {{ cliente.cidade }} 
+                    </div> 
+                 </div>
+             </fieldset>
+      
+        </p-tabPanel>
+        <p-tabPanel header="Ordens de serviços" >
+            <app-ordem-servico [idcliente]="idcliente"></app-ordem-servico>
+        </p-tabPanel>
+
+        <p-tabPanel header="Licenças">
+           <app-licenca [idcliente]="idcliente" ></app-licenca>
+        </p-tabPanel>
+
+        <!--
+        <p-tabPanel header="Gerenciamento" >
+            <app-gerenciamento [idcliente]="idcliente"></app-gerenciamento>
+        </p-tabPanel>
+       -->
+        <p-tabPanel header="Orcamentos">
+            <app-orcamento [idcliente]="idcliente"></app-orcamento>
+        </p-tabPanel>
+        <p-tabPanel header="Senhas">
+            <app-senha [idcliente]="idcliente"></app-senha>
+        </p-tabPanel>
+
+    </p-tabView>
+
+
+
+
+<!-- fecha container -->
+</div>
+
+
+<!-- load-->
+<div *ngIf="load" class="loadcss">
+    <img src="./../../../assets/img/load2.gif">
+ </div>
+

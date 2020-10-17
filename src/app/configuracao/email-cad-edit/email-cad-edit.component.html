@@ -1,0 +1,49 @@
+<div [class]="cssContainer">
+
+  <h5>{{ titulo }}</h5>
+
+  <hr />
+
+
+<form autocomplete="off" #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-group">
+<div class="row">
+  <div class="col-12 col-md-6">
+      <div class="form-group" [class.has-danger]="em.invalid && em.touched || em.invalid && em.dirty">
+        <label>E-mail*:</label>
+        <input type="text" class="form-control form-control-sm" required #em="ngModel" name="email"
+          placeholder="Digite o e-mail" [(ngModel)]="emailAlerta.email" minlength="6">
+          <!--começo da mensagens de validação-->
+          <div class="form-control-feedback"
+          *ngIf="em.hasError('required') && em.touched">
+             O e-mail é obrigatório</div>
+           <div class="form-control-feedback"
+            *ngIf="em.hasError('minlength') && em.dirty">
+             Mínimo de 6 caracteres</div>
+             <!--fim das mensagens de validação do input nome -->
+      </div>
+  </div>
+</div>
+
+<hr />
+
+<div class="row">
+   <div class="col-12 col-md-6">
+      <button type="submit" class="btn btn-sm btn-success" [disabled]="!f.valid">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        Salvar
+      </button>
+      <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          Voltar
+      </button>
+   </div>
+</div>
+
+</form>
+
+  <!-- fecha container -->
+</div>
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

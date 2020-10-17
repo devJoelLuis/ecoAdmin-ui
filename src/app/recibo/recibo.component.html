@@ -1,0 +1,84 @@
+<div class="container alturaMinima corbk">
+
+  <h5 class="titulo">Gerar Recibo</h5>
+  <hr />
+
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="formGroup">
+       <label for="pagante">Recebemos de*: (Pagante):</label>
+       <input type="text" class="form-control form-control-sm" placeholder="Informe o nome do pagante"
+         [(ngModel)]="recibo.recebemosde" name="pagant" id="pagante"/>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="formGroup">
+        <label for="vl">Valor*:</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Informe o valor pago"
+          [(ngModel)]="recibo.total" id="vl" name="valor" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row mtop">
+    <div class="col-12 col-md-6">
+      <div class="form-group">
+        <label for="rf">Referente a*:</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Referente a"
+        [(ngModel)]="recibo.referente" id="rf" name="referente"/>
+      </div>
+    </div>
+    <div class="col-12 col-md-auto">
+      <div class="form-group">
+        <label for="d">Dia*:</label>
+        <input type="number" class="form-control form-control-sm"  min="1" max="31"
+           [(ngModel)]="recibo.dia" name="dia" id="d" />
+      </div>
+    </div>
+    <div class="col-12 col-md-auto">
+      <div class="form-group">
+        <div><label for="ms">Mês*:</label></div>
+        <p-dropdown [options]="meses" [(ngModel)]="mesSelecionado" optionLabel="mes" name="mess" id="ms"></p-dropdown>
+      </div>
+    </div>
+    <div class="col-12 col-md-auto">
+      <div class="form-group">
+        <label for="ano">Ano*:</label>
+        <input type="number" class="form-control form-control-sm"  min="2000" max="2100"
+           [(ngModel)]="recibo.ano" name="ano" id="ano" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="form-group">
+        <label for="imp">Importância:</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Informe o valor por extenso"
+          [(ngModel)]="recibo.importancia" name="importancia" id="imp"/>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary btn-sm" id="btnvoltar" (click)="goBack()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        Voltar
+      </button>
+      <button type="button" class="btn btn-warning btn-sm" (click)="gerarRecibo()">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+        Gerar Recibo
+      </button>
+    </div>
+  </div>
+
+<!-- fecha container -->
+</div>
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

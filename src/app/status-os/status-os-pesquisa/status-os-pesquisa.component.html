@@ -1,0 +1,138 @@
+<div [class]="containerStatusOs">
+
+  <p-button  icon="fa fa-arrow-left" (click)="voltarPagina()" label="Voltar" id="btnVoltar" ></p-button>
+
+<hr />
+
+<div class="row">
+  <div class="col-12"><h4 id="titulo">Consulta de Status Da O.S. cadastrados</h4></div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <input class="form-control form-control-sm text-lowercase"  [disabled]="novo || edicao"
+               id="consulta" [(ngModel)]="consultaString"
+        type="text"  placeholder="Nome do Status" aria-label="Search" (keyup)="onKey($event)"  maxlength=60/>
+      </div>
+ </div>
+ <div class="col-12 col-md-6">
+    <button pButton icon="fa fa-search" label="Consultar"  [disabled]="novo || edicao"
+    id="btnConsultar" (click)="consultar(); page=0;" ></button>
+  </div>
+</div>
+
+<hr />
+
+<form autocomplete="off" #f="ngForm" (ngSubmit)="submitNovoStatus(f)">
+<div class="row btnNovo">
+   <div class="col-12 col-md-6" *ngIf="novo">
+      <div class="form-group" [class.has-danger]="st.invalid && st.touched">
+          <input type="text" maxlength="45" [(ngModel)]="estato.nome" id="statusid" #st="ngModel" required
+          class="form-control form-control-sm  text-lowercase" name="statusNovo" placeholder="Novo Status">
+      <!--começo da mensagens de validação-->
+      <div class="form-control-feedback"
+          *ngIf="st.hasError('required') && st.touched">
+                Informe a descrição do status</div>
+       <div class="form-control-feedback"
+           *ngIf="st.hasError('minlength') && st.dirty">
+              Mínimo de 3 caracteres</div>
+         <!--fim das mensagens de validação do input nome -->
+       </div>
+  </div>
+  <div class="col-12 col-md-6" *ngIf="novo">
+    <input type="color" name="color" [(ngModel)]="estato.cor">
+  </div>
+</div>
+ <div class="row">
+  <div class="col-12 col-md-6" *ngIf="!novo">
+    <button pButton type="button" icon="fa fa-plus" label="Adicionar Status"
+           (click)="novoStatus()"  [disabled]="edicao"></button>
+  </div>
+  <div class="col-12 col-md-6" *ngIf="novo">
+    <button pButton type="submit" icon="fa fa-floppy-o" label="Salvar"  class="ui-button-success btnSalvar" ></button>
+    <button pButton type="button" icon="fa fa-ban" *ngIf="novo" id="btnCancelar" class="ui-button-warning"
+    label="Cancelar" (click)="cancelarNovo()"></button>
+  </div>
+</div>
+
+</form>
+
+<hr />
+
+<div class="table-responsive tabela-empresa">
+
+    <p-table [value]="listStatus" class="table table-striped table-bordered"
+    [responsive]="true" *ngIf="listStatus?.length > 0">
+        <ng-template pTemplate="caption">
+            Lista de status de O.S.
+        </ng-template>
+
+        <ng-template pTemplate="header" >
+         <tr>
+           <th class="colstatus">
+               Nome
+           </th>
+           <th class="col-cor">Cor</th>
+           <th class="acao">Ações</th>
+         </tr>
+        </ng-template>
+
+         <ng-template pTemplate="body" let-st>
+           <tr>
+             <td>
+               <div  *ngIf="!st.edit">{{ st.nome }} </div>
+               <div *ngIf="st.edit">
+                  <input type="text" maxlength="45" [(ngModel)]="estato.nome" id="statusnovo" #stn="ngModel" required
+                  class="form-control form-control-sm  text-lowercase" name="stedit" (keyup)="editStatusKey($event, st)">
+              </div>
+
+            </td>
+            <td  *ngIf="!st.edit" [ngStyle]="{'background-color': st.cor}" >{{ st.cor }}</td>
+            <td *ngIf="st.edit">
+              <input type="color" name="color" [(ngModel)]="estato.cor">
+            </td>
+             <td id="acao">
+
+               <div *ngIf="!st.edit">
+                  <button pButton type="button" pTooltip="Editar Status" icon="fa fa-pencil" [disabled]="st?.id == 6"
+                      tooltipPosition="top" *ngIf="!novo && !edicao" class="ui-button-warning" id="btn-edit"
+                      (click)="editarStatus(st)">
+                  </button>
+                  <button pButton type="button" pTooltip="Excluir Status" icon="fa fa-trash-o icon"
+                     [disabled]="st?.id == 6 || !auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_STATUS_OS_EXCLUI'])"
+                     tooltipPosition="top" *ngIf="!novo && !edicao" class="btn btn-danger" class="ui-button-danger"
+                     (click)="confirmarExclusao(st.nome, st.id)">
+                  </button>
+                </div>
+                <div *ngIf="st.edit">
+
+                    <button pButton type="button" icon="fa fa-floppy-o" (click)="salvarEdicao(st)"
+                     class="ui-button-success btnSalvar" pTooltip="Salvar Alteração" ></button>
+
+                    <button pButton type="button" id="tbBtnCancel" icon="fa fa-ban" class="ui-button-warning"
+                     (click)="cancelarEdicao(st)" pTooltip="Cancelar" ></button>
+
+                </div>
+             </td>
+           </tr>
+          </ng-template>
+
+
+    </p-table>
+
+</div>
+<div class="row top 10" *ngIf="totalRegistro > 10">
+    <div class="col-12">
+      <p-paginator [rows]="size" [totalRecords]="totalRegistro" [rowsPerPageOptions]="[10,20,30,40]"
+      (onPageChange)="paginate($event)"></p-paginator>
+    </div>
+</div>
+
+<hr *ngIf="listStatus?.length > 0" />
+
+</div><!--Fecha container-->
+<div *ngIf="load" class="loadcss">
+<img src="./../../../assets/img/load2.gif">
+</div>
+

@@ -1,0 +1,52 @@
+<nav class="navbar navbar-dark bg-dark">
+  <span><h4 id="nav-titulo"><img id="img-titulo" src="./../../../assets/img/coami.png" alt="COAMI" width=100>
+    <span id="nv-ver-titulo">System ver 2.1.1</span></h4></span>
+</nav>
+
+<div class="container alturaMinima cor-container" >
+
+   <div class="form-login col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+     <header>
+      <div><img id="img-coami" src="./../../../assets/img/coami.png" alt="COAMI" width=150></div>
+      <h5>Entre com seu e-mail e senha</h5>
+    </header>
+    <form>
+       <div class="form-group">
+        <div class="input-group mb-3">
+           <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+              </span>
+           </div>
+           <input type="text" class="form-control form-control-sm text-lowercase" name="emailUser" [(ngModel)]="email"
+              placeholder="E-mail" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="basic-addon1">
+                  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+               </span>
+            </div>
+            <input type="password" class="form-control form-control-sm" name="senhaUser" [(ngModel)]="senha"
+               placeholder="Senha" aria-label="Username" aria-describedby="basic-addon1" (keyup)="keyup($event)">
+         </div>
+       </div>
+
+       <footer>
+        <button type="button" (click)="logar()"
+           class="btn btn-primary pull-left">Entrar</button>
+        <div><a href="javascript:;" class="pull-right" (click)="recoverPasswd()">Esqueci a senha</a></div>
+       </footer>
+
+    </form>
+   </div>
+
+</div>
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>
+

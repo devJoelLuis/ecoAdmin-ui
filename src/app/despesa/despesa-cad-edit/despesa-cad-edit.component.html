@@ -1,0 +1,214 @@
+<div class="container-full alturaMinima">
+<div [class]="css">
+
+  <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+     Voltar
+  </button>
+
+  <div class="row">
+    <div class="col-12 center">
+      <div class="painel" style="margin-bottom: 10px;">
+        <h5>{{ titulo }}</h5>
+      </div>
+    </div>
+  </div>
+
+ 
+
+
+  <form autocomplete="off"  (ngSubmit)="onSubmit()" [formGroup]="formulario">
+   <div class="painel">
+     <fieldset>
+      <div class="row">
+        <div class="col-12">
+          <div  class="alert alert-danger alerta" role="alert"
+              *ngIf="formulario.invalid && formulario.touched">
+                Preencha todos os campos com * asterisco.
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-7">
+            <div class="form-group" [class.has-danger]="formulario.get('descricao').invalid && formulario.get('descricao').touched">
+              <label for="descricao">Descrição: <span class="text-danger">*</span></label>
+              <input type="text" class="form-control form-control-sm"  name="descricao"
+                  placeholder="Descrição" id="descricao" formControlName="descricao" />
+                  <!--começo da mensagens de validação-->
+                  <div  class="alert alert-danger alerta" role="alert"
+                  *ngIf="formulario.get('descricao').hasError('required') && formulario.get('descricao').touched">
+                    A descrição é obrigatória</div>
+                  <div  class="alert alert-danger alerta" role="alert"
+                    *ngIf="formulario.get('descricao').hasError('minlength') && formulario.get('descricao').dirty">
+                    Mínimo de 3 caracteres</div>
+                <!--fim das mensagens de validação do input-->
+            </div>
+        </div>
+        <div class="col-auto  form-group">
+            <div class="form-group" [class.has-danger]="formulario.get('data').invalid && formulario.get('data').touched">
+            <div><label>Data pagamento: <span class="text-danger">*</span> </label></div>
+            <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+            [showIcon]="true" [locale]="br.br" formControlName="data"
+                  name="dtvencimento" dateFormat="dd/mm/yy"  [inputStyle]="{'width':'70%'}"></p-calendar>
+              <!--começo da mensagens de validação-->
+              <div  class="alert alert-danger alerta" role="alert"
+                  *ngIf="formulario.get('data').invalid && formulario.get('data').touched">
+                  A data é obrigatória
+                </div>
+              <!--fim das mensagens de validação do dropdown-->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-auto">
+          <div class="form-group" [class.has-danger]="formulario.get('valor').invalid && formulario.get('valor').touched">
+            <label for="valor">Valor: <span class="text-danger">*</span> </label>
+              <input type="text" name="valor" placeholder="0,00" class="form-control form-control-sm"
+                  currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+              formControlName="valor">
+              <!--começo da mensagens de validação-->
+              <div  class="alert alert-danger alerta" role="alert"
+                  *ngIf="formulario.get('valor').invalid && formulario.get('valor').touched">
+                  O valor é obrigatório
+                </div>
+              <!--fim das mensagens de validação do dropdown-->
+          </div>
+        </div>
+        <div class="col-auto form-group" formGroupName="categoriaRecebimento">
+          <div class="form-group" [class.has-danger]="formulario.get('categoriaRecebimento').invalid && formulario.get('categoriaRecebimento').touched">
+            <div><label>Categorias: <span class="text-danger">*</span> </label></div>
+            <p-dropdown [options]="categorias" formControlName="id" placeholder="Selecione uma categoria" [autoWidth]="false"
+              optionLabel="descricao" [showClear]="true" name="categoriaRecebimento"></p-dropdown>
+              <!--começo da mensagens de validação-->
+              <div  class="alert alert-danger alerta" role="alert"
+                  *ngIf="formulario.get('categoriaRecebimento').invalid && formulario.get('categoriaRecebimento').touched">
+                  A categoria é obrigatória
+                </div>
+              <!--fim das mensagens de validação do dropdown-->
+          </div>
+        </div>
+      </div>
+  
+    </fieldset>
+  </div>
+
+
+   <div class="painel">
+      <fieldset>
+        <div class="row">
+          <div class="col-12" *ngIf="!os.id || os?.id == 0">
+            <h6><strong>NENHUMA O.S. VINCULADA</strong></h6>
+          </div>
+           <div class="flexivel" *ngIf="os?.id > 0">
+               <div class="sub-painel" style="margin-left: 5px;">
+                 <strong>O.S. VINCULADA: Nº</strong> {{os?.numOs}}/{{os?.anoOs}} 
+               </div>
+               <div class="sub-painel">
+                <strong>DESCRIÇÃO: </strong> {{ os?.local }} 
+               </div>
+               <div class="sub-painel">
+                <strong>CLIENTE:</strong> {{ os?.cliente?.nome }}
+               </div>   
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-sm btn-danger" (click)="desvicular()" [disabled]="os?.id == 0" 
+              *ngIf="os?.id > 1">
+             <i class="fa fa-ban" aria-hidden="true"></i>
+               Remover Vinculo de O.S.
+             </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 form-group">
+             <button class="btn btn-sm btn-primary" type="button" (click)="osDialogOn()" *ngIf="!os.id || os?.id == 0">
+               Vincular O.S. a despesa
+              </button>
+          </div>
+        </div>
+      </fieldset>
+   </div>
+
+
+
+    <div class="row">
+      <div class="col-12">
+        <div class="painel center" style="margin-top:0;">
+          <button type="submit" class="btn btn-sm btn-success" [disabled]="formulario.invalid">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+             Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+
+ <!-- fecha container -->
+</div>
+</div>
+
+
+
+
+
+<!-- form para adicionar nova tarefa e escolher a O.S -->
+<p-dialog header="Selecione a O.S." [(visible)]="dialogOn" [modal]="true" [style]="{width: '60vw', heigth: '500px'}" 
+    [draggable]="false" [resizable]="false" [closable]="false">
+
+     <div class="painel-dialog">
+      <fieldset>
+        <input type="text" class="form-control form-control-sm" placeholder="Nº/ano ou parte da descrição da O.S." id="input-consulta-os"
+            [(ngModel)]="param" name="consulta" (keyup)="keyup($event)"/>
+        <button type="button"  class="btn btn-sm btn-primary" style="margin-top: 15px;" (click)="consultarOs()">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          Consultar
+        </button>
+        <button type="button" class="btn btn-sm btn-warning" (click)="osDialogOFF()" id="btn-cancela">
+          <i class="fa fa-ban" aria-hidden="true"></i>
+          Cancelar
+        </button>
+       </fieldset>
+      </div> 
+
+       <div class="tabela-os">
+        <p-table [value]="oss" class="table table-striped table-bordered"
+        [responsive]="true" [scrollable]="true" scrollHeight="180px">
+            <ng-template pTemplate="header">
+             <tr *ngIf="oss?.length > 0">
+                <th class="col-num">Nº O.S.</th>
+                <th class="col-nomecli">Cliente</th>
+                <th class="col-desc">Descrição</th>
+                <th class="col-op center">Opção</th>
+             </tr>
+            </ng-template>
+
+             <ng-template pTemplate="body" let-o>
+               <tr class="linha">
+                 <td>{{ o.numOs }}/{{ o.anoOs}}</td>
+                 <td>{{ o.cliente.nome }}</td>
+                 <td>{{ o.local }}</td>
+                 <td class="col-op center">
+                   <button type="button" class="btn btn-sm btn-success" (click)="selecionarOs(o)" >
+                    <i class="fa fa-share" aria-hidden="true"></i>
+                   </button>
+
+                 </td>
+               </tr>
+              </ng-template>
+        </p-table>
+        </div>
+</p-dialog>
+
+
+
+
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

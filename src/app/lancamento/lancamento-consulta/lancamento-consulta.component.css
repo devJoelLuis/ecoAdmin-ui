@@ -1,0 +1,114 @@
+
+
+.container-lancamento-consulta {
+  background-color: rgb(219, 233, 220);
+  padding: 10px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow: auto;
+}
+
+#titulo {
+  font-weight: 300;
+}
+.btnNovo {
+  margin-bottom: 10px;
+}
+.table-responsive {
+  overflow: auto;
+}
+
+.center {
+  text-align: center;
+}
+.left10 {
+  margin-left: 10px;
+}
+.top15 {
+  margin-top: 15px;
+}
+
+@media screen and (min-width: 641px) {
+  .col-desc {
+    width: 250px;
+  }
+  .col-valor{
+    width: 120px;
+  }
+  .col-tipo{
+    width: 100px;
+  }
+  .col-venc{
+    width: 100px;
+  }
+  .col-obs{
+    width: 220px;
+  }
+  .col-situ{
+    width: 100px;
+  }
+  .col-dtpag {
+    width: 100px;
+  }
+  .col-op{
+    width: 100px;
+  }
+}
+
+
+
+@media screen and (max-width: 1366px) {
+  .texto-tamanho > td {
+    font-size: 12px;
+  }
+}
+
+
+
+
+@media screen and (min-width: 900px) {
+  .container-lancamento-consulta {
+    width: 88%;
+    margin: 0 auto;
+    padding: 30px;
+  }
+
+  #consulta {
+    display: inline;
+    max-width: 450px;
+    margin-right: 5px;
+  }
+
+
+}
+
+
+
+@media screen and (min-width: 768px) and (max-width: 899px) {
+  .container-lancamento-consulta {
+    width: 98%;
+    margin: 0 auto;
+    padding: 5px;
+  }
+
+  #consulta {
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 767px) {
+
+  .container-lancamento-consulta {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  #dtfim {
+    margin-left: 13px;
+  }
+
+}

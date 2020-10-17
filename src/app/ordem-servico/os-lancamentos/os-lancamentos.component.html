@@ -1,0 +1,209 @@
+<div class="container-os-lancamento bg-color alturaMinima" *ngIf="!dialogLancamento">
+
+  <div class="row-custom">
+    <div class="col-12">
+      <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        Voltar
+      </button>
+    </div>
+  </div>
+
+  <div id="titulo"> <h3>Lançamentos</h3></div>
+
+<hr />
+
+<div class="row">
+    <div class="col-6 col-md-auto form-group">
+      <div><label>Data Início</label></div>
+      <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050" id="dtreceb"
+            [(ngModel)]="dataInicio" [showIcon]="true" [locale]="br.br"
+            name="dtinicio" dateFormat="dd/mm/yy"  [inputStyle]="{'width':'70%'}">
+      </p-calendar>
+    </div>
+    <div class="col-6 col-md-auto form-group">
+      <div><label>Data Final</label></div>
+      <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050" id="dtreceb"
+            [(ngModel)]="dataFinal" [showIcon]="true" [locale]="br.br"
+            name="dtfinal" dateFormat="dd/mm/yy"  [inputStyle]="{'width':'70%'}">
+      </p-calendar>
+    </div>
+
+    <div class="col-4 col-md-auto form-group filtro-top">
+      <p-radioButton name="group1" value="pago" label="Pagos" [(ngModel)]="filtro" inputId="opt1"></p-radioButton>
+    </div>
+    <div class="col-4 col-md-auto form-group filtro-top">
+      <p-radioButton name="group1" value="aberto" label="Aberto" [(ngModel)]="filtro" inputId="opt2"></p-radioButton>
+    </div>
+    <div class="col-4 col-md-auto form-group filtro-top">
+      <p-radioButton name="group1" value="todos" label="Todos" [(ngModel)]="filtro" inputId="opt3"></p-radioButton>
+    </div>
+    <div class="col-12 col-md-auto form-group filtro-top">
+      <button type="button" class="btn btn-sm btn-primary btn-consultar" (click)="page=0; buscarLancamentosDaOs()">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        Consultar
+      </button>
+    </div>
+
+</div>
+
+<hr />
+
+<div class="row">
+   <div class="col-12 col-md-12 form-group">
+      <button type="button" class="btn btn-sm btn-primary" (click)="novoLancamento()">
+        Novo Lançamento
+      </button>
+   </div>
+</div>
+
+<div id="tabela">
+  <p-table [value]="lancamentosDto">
+
+    <ng-template pTemplate="caption">
+      O.S {{ os.numOs }} / {{ os.anoOs }} {{ os.local }}, {{ os.cliente?.nome }}
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th scope="col" style="width: 220px;" >Descrição</th>
+        <th scope="col" style="width: 95px;">Data</th>
+        <th scope="col" style="width: 100px;">Total</th>
+        <th scope="col" style="width: 100px;">Recebido</th>
+        <th scope="col" style="width: 100px;">A receber</th>
+        <th scope="col" style="width: 350px;">Recebimentos</th>
+        <th scope="col" class="center" style="width: 130px;">Opções</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-l>
+      <tr
+          [class.aberto]="l.total > l.totalPago"
+          [class.pago]="l.total <= l.totalPago" >
+
+          <td> {{ l.descricao }} </td>
+          <td>{{ l?.data | date: 'dd/MM/yyyy'  }}</td>
+          <td ><div class="bloco">R$ {{ l.total | number: '1.2-2' }} </div> </td>
+          <td class="col-pago"><div class="bloco">R$ {{  l.totalPago | number: '1.2-2' }}</div></td>
+          <td>
+              <div class="bloco" *ngIf="l.totalReceber >= 0">
+                 R$ {{ l.totalReceber | number: '1.2-2' }}
+               </div>
+               <div class="bloco" *ngIf="l.totalReceber < 0">
+                 R$ 0.00
+              </div>
+          </td>
+          <td>
+
+             <p-table [value]="l.recebimentos">
+                <ng-template pTemplate="body" let-rec let-i2="rowIndex">
+                 <tr pTooltip="Clique para editar"
+                    class="row-recebidos" (click)="editarRecebimentoS(rec)" attr.tabindex="{{i2}}" >
+                     <td  style="width: 100px;">{{ rec.data | date: 'dd/MM/yyyy'  }}</td>
+                     <td  style="width: 100px;"><div class="bloco">R$ {{ rec.valor | number: '1.2-2' }}</div> </td>
+                     <td>{{ rec.formaPagamento }}</td>
+                     </tr>
+                 </ng-template>
+              </p-table>
+
+
+          </td>
+          <td class="center">
+
+              <button type="button" class="btn btn-sm btn-success" id="btn-pago" *ngIf="l.total > l.totalPago" data-toggle="modal"
+                pTooltip="Recebimento" tooltipPosition="left" (click)="receber(l.idlancamento)" data-target="#exampleModalLong">
+                <i class="fa fa-money" aria-hidden="true"></i>
+              </button>
+              <a href="javascript:;" [routerLink]="['/lancamento', l.idlancamento]">
+                <button type="button" class="btn btn-sm btn-warning" id="btn-editar"
+                        pTooltip="Editar lançamento" tooltipPosition="left">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+              </a>
+              <button type="button" class="btn btn-sm btn-danger" id="btn-delete"
+                      pTooltip="Excluir lançamento" tooltipPosition="left" (click)="excluir(l.idlancamento)">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </button>
+
+         </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr *ngIf="lancamentosDto && lancamentosDto?.length == 0">
+        <td colspan="100">
+          <h5 class="has-danger">
+              Nenhum lançamento encontrado entre {{ dataInicio | date: 'dd/MM/yyyy' }} e {{ dataFinal  | date: 'dd/MM/yyyy'}}.
+          </h5>
+       </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div id="paginacao" *ngIf="totalRegistro > 20">
+  <p-paginator #pag [rows]="size" [totalRecords]="totalRegistro" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60]"></p-paginator>
+</div>
+
+
+
+
+<!-- botao oculto para abrir editar via código -->
+<button type="button" id="btn-editar-recebimento"  data-toggle="modal"
+   data-target="#exampleModalLong" hidden="true">
+</button>
+
+ <!-- fecha container principal -->
+</div>
+
+
+
+
+
+<!-- Modal recebimento-->
+<div *ngIf="modoReceber"
+   class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">RECEBIMENTO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" hidden="true">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-recebimento-cad-edit [idrecebimento]="idrecebimento"
+                                  [idlancamento]="idlancamentoSelecionado"
+                                  (fimCadEdit)="fecharReceber()">
+
+        </app-recebimento-cad-edit>
+      </div>
+
+        <button type="button" id="btn-fecha-modal-recebimento"
+            class="btn btn-secondary" data-dismiss="modal" hidden="true" >Close</button>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- dialog lançamento -->
+<div class="container-os-lancamento" *ngIf="dialogLancamento">
+
+  <app-lancamento-cad-edit *ngIf="dialogLancamento"
+                           [idlancamento]="0"
+                           [idOs]="os?.id"
+                           (fimCadEdit)="cancelarNovoLancamento()">
+  </app-lancamento-cad-edit>
+
+</div>
+
+
+
+
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

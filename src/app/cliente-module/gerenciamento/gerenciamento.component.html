@@ -1,0 +1,217 @@
+
+
+
+<div class="container-gerenciamento alturaMinima" *ngIf="semPermissao">
+
+  <div style="width: 300px; margin: 0 auto; text-align: center;">
+    <h6 class="text-danger">SEM PERMISSÃO</h6>
+ </div>
+
+</div>
+
+
+
+<div class="container-gerenciamento alturaMinima" *ngIf="!semPermissao">
+
+ <div *ngIf="!modoCadastro && !modoEdit && !modoAddTaxa">
+  <div class="row">
+    <div class="col-6">
+        <button pButton label="Adicionar novo" icon="fa fa-plus" (click)="ativaModoCadastro()"></button>
+    </div>
+  </div>
+
+  <hr />
+  <div id="accordion">
+  <div class="card" *ngFor="let ger of listGer; let i = index">
+
+    <div class="card-header" id="heading{{ i }}">
+      <button attr.data-target="#List-{{ i }}" data-toggle="collapse" class="btn btn-info collapsed btnColapse"
+              aria-expanded="false" attr.aria-controls="List-{{ i }}" (click)="tabGer(ger)">
+              <span class="spanColapse"> Descrição:</span> <span class="spanColapseGer">{{ ger.descricao }} </span>
+
+               <span class="spanColapse"> Parcelas:</span> <span class="spanColapseGer">{{ ger.totalParcela }}</span>
+
+               <span class="spanColapse">Obs:</span> <span class="spanColapseGer">{{ ger.obs }}</span>
+
+      </button>
+    </div>
+
+    <div id="List-{{ i }}" class="collapse" attr.aria-labelledby="heading{{ i }}"  data-parent="#accordion">
+      <div class="card-body">
+
+
+       <!--  <button type="button" (click)="adicionarTaxaUnica(ger)"
+        class="btn btn-dark form-control-sm btnSalvarGer"><i class="fa fa-plus" aria-hidden="true"></i>
+            Adicionar taxa
+        </button> -->
+
+        <button type="button" (click)="alterarGerenciamento(ger)"
+           class="btn btn-primary form-control-sm btnAlterarGer"><i class="fa fa-pencil" aria-hidden="true"></i>
+              Alterar Gerenciamento
+        </button>
+
+        <button type="button" (click)="confirmarExclusao(ger)" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_GERENCIAMENTO_EXCLUI'])"
+          class="btn btn-danger form-control-sm btnExcluirGer"><i class="fa fa-trash" aria-hidden="true"></i>
+             Excluir Gerenciamento
+        </button>
+        <hr />
+
+        <div class="tabela-gerencimanto" *ngIf="gerenciamentoSelecionado.parcelas?.length > 0">
+          <p-table [value]="gerenciamentoSelecionado.parcelas" [responsive]="true">
+              <ng-template pTemplate="header">
+                  <tr>
+
+                      <th class="colVencimento">Vencimento</th>
+                      <th class="colVencimento">Pagamento</th>
+                      <th class="colValor">Valor</th>
+                      <th class="colParcela">Parcela</th>
+                      <th class="center colOp">Opções</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-p>
+                  <tr [class.devedorVencido]="p.pago == 0 && p.dataVencimento.getTime() < dtNow.getTime()"
+                      [class.devedor]="p.pago == 0 && p.dataVencimento.getTime() >= dtNow.getTime()"
+                      [class.pago]="p.pago == 1"  >
+                      <td>{{ p.dataVencimento | date: 'dd-MM-yyyy' }}</td>
+                      <td>
+                        <span *ngIf="p?.dataPagamento.getTime() > semDataMili">
+                            {{ p.dataPagamento | date: 'dd-MM-yyyy' }}
+                        </span>
+                      </td>
+                      <td>R$ {{ p.valor | number: '1.2-2' }} </td>
+                      <td>{{ p.numeroParcela }} de {{ gerenciamentoSelecionado.totalParcela}}</td>
+                      <td class="center">
+
+                        <a href="javascript:;" *ngIf="p.pago === 0"
+                          (click)="ativaModoDefinirPago(p)"
+                          pTooltip="Definir como pago" tooltipPosition="top">
+                          <span class="fa fa-money" id="iconPago"></span>
+                       </a>
+
+                       <a href="javascript:;" *ngIf="p.pago === 1"
+                          (click)="definirDevedor(p)"
+                          pTooltip="Definir como devedor" tooltipPosition="top">
+                          <span class="fa fa-share-square-o" id="iconDevedor"></span>
+                       </a>
+
+                      </td>
+                  </tr>
+              </ng-template>
+          </p-table>
+      </div>
+      <div class="paginatorParcelas" *ngIf="totalRegParc > sizeParc">
+          <p-paginator [rows]="sizeParc" [totalRecords]="totalRegParc" (onPageChange)="paginate($event)"></p-paginator>
+      </div>
+      <!-- fim not modo cadastro e not mode edit -->
+
+      <div class="row" *ngIf="gerenciamentoSelecionado?.parcelas.length == 0">
+        <div class="col-12">
+           <h5 style="color:red; font-weight: 200;">Nenhuma parcela encontrada</h5>
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+ </div>
+<!-- fecha modo listar gerenciamentos -->
+</div>
+
+
+
+
+<div *ngIf="modoCadastro || modoEdit || modoAddTaxa">
+     <div class="row">
+       <div class="col-12">
+         <h5>{{ titulo }}</h5>
+       </div>
+     </div>
+
+     <hr />
+
+     <div class="row">
+       <div class="col-12 col-md-6">
+          <label>Descrição</label>
+          <input type="text" [(ngModel)]="gerenciamento.descricao" placeholder="Descrição"
+              name="descricao" class="form-control" [disabled]="modoAddTaxa"/>
+       </div>
+       <div class="col-12 col-md-6" *ngIf="!modoEdit">
+          <label>Data Vencimento</label>
+          <div>
+              <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+               [(ngModel)]="taxa.dataVencimento"  name="dtVencimento" [locale]="br.br"
+               [showIcon]="true" dateFormat="dd/mm/yy" tooltipPosition="bottom"
+               pTooltip="Informe a data da primeira parcela" [disabled]="modoEdit"></p-calendar>
+             </div>
+        </div>
+     </div>
+
+     <div class="row top20">
+        <div class="col-12 col-md-6" *ngIf="!modoEdit">
+           <label>Valor <span *ngIf="modoAddTaxa"> da nova Parcela {{ gerenciamento.totalParcela + 1 }}
+             de {{ gerenciamento.totalParcela + 1 }}</span></label>
+           <input type="text" [(ngModel)]="taxa.valor" placeholder="0,00" id="input-valor"
+              name="valor" class="form-control" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+        </div>
+
+        <div class="col-12 col-md-6" *ngIf="!modoAddTaxa && !modoEdit">
+           <label>Parcelas (1 a 24)</label>
+           <input class="form-control" name="parcelas" [(ngModel)]="gerenciamento.totalParcela" type="number" min="1" max="24"
+           id="input-parcelas" minlength="1" maxlength="2" >
+         </div>
+      </div>
+
+    <div class="row top20">
+        <div class="col-12">
+            <button pButton label="Salvar" icon="fa fa-floppy-o" id="btnSalvar"
+               class="ui-button-success" (click)="salvar()" *ngIf="!modoAddTaxa"></button>
+            <button pButton label="Salvar" icon="fa fa-floppy-o" id="btnSalvar"
+               class="ui-button-success" (click)="salvarTaxaUnica()" *ngIf="modoAddTaxa"></button>
+            <button pButton label="Voltar" icon="fa fa-arrow-left" id="btnCancelar"
+               (click)="cancelar()" class="ui-button-info"></button>
+        </div>
+    </div>
+    <hr />
+  <!-- fim modo cadastro -->
+</div>
+
+
+<!-- fecha container -->
+</div>
+
+
+
+<div class="form-data-pagamento" *ngIf="modoDefinirPago">
+  <div class="corpo">
+      <div class="row">
+          <div class="col-12 texto-right">
+            <button pButton type="button" (click)="desativaModoDefinirPago()"
+               label="X" id="btnFecharDefinirDataPagamento" class="ui-button-danger"></button>
+          </div>
+        </div>
+        <hr />
+       <div class="row">
+         <div class="col-12">
+           <label>Data do pagamento:</label>
+           <div>
+              <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+              [(ngModel)]="parcela.dataPagamento"  name="dtPg"
+              [showIcon]="true" dateFormat="dd/mm/yy" [locale]="br.br"></p-calendar>
+           </div>
+         </div>
+       </div>
+       <hr />
+       <div class="row">
+         <div class="col-12">
+            <button pButton type="button" (click)="definirPago()"
+              label="Definir como pago" icon="fa fa-money"></button>
+         </div>
+       </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="load" class="loadcss">
+   <img src="./../../../assets/img/load2.gif">
+</div>

@@ -1,0 +1,9 @@
+<div class="container-licenca">
+
+  <app-licenca-consulta [idcliente]="idcliente" (novoOuEdit)="cadOuEdit($event)"
+      *ngIf="!cadEdit"></app-licenca-consulta>
+
+ <app-licenca-cad-edit [idcliente]="idcliente" [idLicenca]="idLicenca"
+   (fimCadEdit)="consultar($event)" *ngIf="cadEdit" ></app-licenca-cad-edit>
+
+</div>

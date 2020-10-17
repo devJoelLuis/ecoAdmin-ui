@@ -1,0 +1,60 @@
+<div class="container-historico-cat-recebimento bg-color alturaMinima">
+
+
+  <div class="painel center">
+   <div class="btn-voltar"> 
+      <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        Voltar
+      </button>
+   </div>  
+     <h5 style="margin:0;">Histórico da categoria de Recebimento: {{ catRecebimento?.descricao }}</h5>
+  </div>
+  <div class="painel center">
+    <h6 class="text-danger" *ngIf="historicos?.length <= 0">Nenhum registro encontrado</h6>
+    <div class="tabela" *ngIf="historicos?.length > 0">
+
+      <p-table [value]="historicos" >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 300px; text-align: left;">Descrição da ação:</th>
+                <th style="width: 10em;">Data e Hora:</th>
+                <th style="width: 8em;">Valor anterior:</th>
+                <th style="width: 8em">Valor atual:</th>
+                <th style="width: 15em; text-align: left;">Usuário:</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-hist>
+            <tr [ngClass]="{'text-danger': verificarDebito(hist.descricao), 'text-success': !verificarDebito(hist.descricao)}">
+                <td style="text-align: left;" >
+                  {{ hist.descricao }}
+                </td>
+                <td>
+                  {{ hist.dataHora | date: 'dd/MM/yyyy HH:mm'}}
+                </td>
+                <td>
+                   R$ {{ hist.valorAnterior | number: '1.2-2' }}
+                </td>
+                <td>
+                  R$ {{ hist.valorModificado | number: '1.2-2' }}
+                </td>
+                <td style="text-align: left;">
+                  {{ hist.userNome }}
+                </td>
+            </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+    <div class="paginador">
+      <p-paginator [rows]="size" [totalRecords]="totalRegistro" (onPageChange)="paginate($event)"></p-paginator>
+    </div> 
+  </div>
+ 
+
+<!-- fecha container -->  
+</div>
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

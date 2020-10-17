@@ -1,0 +1,441 @@
+
+
+/*linear-gradient(to right, */
+
+.container-custom {
+  background: linear-gradient(to right, rgba(236, 240, 231, 0.705), rgba(168, 228, 79, 0.705));
+}
+
+
+#titulodash {
+  font-weight: 300;
+  color: rgb(5, 90, 5);
+}
+#btn-novo-cliente {
+  margin-right: 10px;
+  width: 160px;
+}
+#btn-nova-os {
+  width: 160px;
+  margin-right: 10px;
+}
+#btn-novo-lancamento {
+  margin-right: 10px;
+  width: 160px;
+}
+#btn-recebimento {
+  width: 160px;
+  margin-right: 10px;
+}
+#btn-despesa {
+  width: 160px;
+}
+
+.borda {
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 10px
+}
+.d1 > label {
+  font-weight: 400;
+  color: blue;
+}
+.orc > label {
+  font-weight: 400;
+  color: rgb(100, 100, 5);
+}
+.servico > a > label {
+  font-weight: 400;
+  font-size: 14px;
+  color: rgb(30, 90, 22);
+}
+.lic > a > label {
+  font-weight: 400;
+  color: rgb(148, 55, 11);
+}
+label {
+  margin: 0;
+}
+.ret {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: black;
+}
+.retvenc {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: red;
+}
+#dvencer {
+  width: 40px;
+}
+
+.colorred {
+  color: red;
+}
+.colorYelow {
+  color:rgb(163, 136, 13);
+}
+.acao {
+  text-align: center;
+  width: 70px;
+}
+.colDataVenc {
+  width: 150px;
+}
+.colOs {
+  width: 80px;
+}
+.colValor {
+  width: 110px;
+}
+
+.link-dash {
+  text-decoration: none;
+}
+.link-dash :hover {
+  cursor: pointer;
+}
+
+
+#titulo-tarefas {
+  font-weight: 300;
+  margin-left: 27px;
+}
+
+.tarefa-line {
+  width: 100%;
+}
+
+#btn-add-tarefa {
+  margin-right: 20px;
+}
+#form-nova-tarefa {
+  max-height: 400px;
+  overflow: auto;
+}
+#input-consulta-os {
+  width: 70%;
+  display: inline-block;
+  margin-right: 10px;
+}
+.tabela-os {
+  margin-top: 15px;
+  width: 100%;
+  overflow: auto;
+}
+.center {
+  text-align: center;
+}
+.col-num {
+  width: 100px;
+}
+.col-desc {
+  width: 240px;
+}
+.col-op {
+  width: 70px;
+}
+.col-nomecli {
+  width: 240px;
+}
+#btn-custom {
+  padding: 8px;
+  border-radius: 3px;
+  background-color: green;
+}
+#btn-cancela {
+  margin-right: 15px;
+}
+#btn-edit-tarefa {
+  margin-right: 5px;
+}
+.tarefa-line2 > p {
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+}
+.tarefa-line2 {
+  border: 1px solid rgb(42, 126, 9);
+  border-radius: 5px;
+  padding: 5px;
+}
+.lb-prazo {
+  color: blue;
+
+}
+.lb-prazo > span {
+  margin-left: 5px;
+}
+
+
+.tecnico-nome {
+  font-size: 14px;
+  font-weight: 300;
+  color: blue;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.tarefas-tecnicos {
+  background: linear-gradient(to right, rgb(230, 227, 227), rgba(105, 104, 104, 0.76));
+  padding: 20px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+  border: 1px solid blue;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+
+.tarefas-tecnicos ul {
+  display: grid;
+  grid-template-columns:  repeat(2, 1fr);;
+  grid-gap: 10px;
+  list-style: none;
+}
+
+
+
+
+.tarefas-tecnicos ul li {
+  background: #fff;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.753);
+}
+
+.tarefas-tecnicos ul li > div {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.tarefas-tecnicos ul li > div > div {
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.tarefas-tecnicos ul > li :hover {
+  background: rgb(235, 229, 229);
+}
+
+
+#ul-lembrete {
+  display: grid;
+  grid-template-columns:  repeat(4, 1fr);;
+  grid-gap: 5px;
+  list-style: none;
+}
+
+#ul-lembrete > li {
+   padding: 5px;
+   font-size: 14px;
+   cursor: pointer;
+}
+#ul-lembrete > li :hover {
+  background: rgb(235, 229, 229);
+}
+
+#span-remove {
+  color: red;
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+#bt-remove {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+
+#div-nome-tecnico {
+  display: inline;
+  text-align: center;
+  margin-left: 34%;
+}
+.h6-tecnicos {
+  font-weight: 400;
+  color: blue;
+}
+
+
+.painel-principal {
+  display: flex;
+  margin: 20px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.575);
+  background: #fff;
+  border-radius: 5px;
+}
+
+.painel {
+  display: flex;
+  margin: 20px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.575);
+  background: #fff;
+  border-radius: 5px;
+}
+
+.sub-painel {
+  margin-right: 10px;
+  padding: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.575);
+  border-radius: 5px;
+}
+.sub-painel:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.painel2 {
+  margin: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.575);
+}
+
+
+.prioridades {
+  display: flex;
+  padding: 20px 20px 20px 0;
+  align-items: center;
+}
+.prioridades label {
+  margin-left: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+#prioridade {
+  margin-left:0;
+}
+ #pri {
+  color: green;
+}
+ #fi {
+  color: rgb(151, 151, 8);
+}
+ #ag {
+  color: blue;
+}
+.prioridades p-radioButton {
+  margin-left: 15px;
+}
+.div-prioridade-info {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1px solid rgb(80, 78, 78);
+}
+.color-green {
+  background: green;
+}
+.color-yellow {
+  background: yellow;
+}
+.color-blue {
+  background: blue;
+}
+
+
+
+
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+  .fontsm > * {
+    font-size: 13px;
+  }
+  #div-nome-tecnico {
+    margin-left: 28%;
+  }
+}
+
+@media screen and (max-width: 1175px) {
+  .tarefas-tecnicos ul {
+    grid-template-columns: 1fr;
+  }
+
+#bt-remove {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+}
+
+}
+
+
+
+@media screen and (min-width: 900px) {
+
+  .container-custom {
+    width: 88%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .calend-ini-fim {
+    display: inline;
+    padding: 10px;
+  }
+
+}
+
+@media screen and (max-width: 899px) {
+  .painel {
+    margin: 10px;
+    padding: 8px;
+  }
+  .sub-painel {
+    margin: 10px 0 10px 0;
+  }
+
+  .painel-principal {
+    flex-direction: column;
+  }
+  .container-custom {
+    width: 100%;
+    margin: 0 auto;
+    padding: 2px;
+  }
+  #titulo-tarefas {
+    font-weight: 300;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .btn-p {
+    margin: 10px;
+  }
+  .tarefas-tecnicos {
+    background-color: #fff;
+    padding: 5px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+    border: 1px solid blue;
+    border-radius: 3px;
+  }
+  #input-consulta-os {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  #div-nome-tecnico {
+    margin-left: 10%;
+  }
+
+  #ul-lembrete {
+    grid-template-columns:  repeat(1, 1fr);;
+  }
+
+}

@@ -1,0 +1,148 @@
+<div class="container bg-color alturaMinima">
+
+  <div class="row">
+    <div class="col-12 form-group">
+     <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+       <i class="fa fa-arrow-left" aria-hidden="true"></i>
+       Voltar
+     </button>
+    </div>
+  </div>
+
+ <div class="row">
+   <div class="col-12 center form-group">
+     <h5 id="titulo">Categorias de recebimento</h5>
+   </div>
+ </div>
+
+ <div class="row">
+  <div class="col-12">
+   <button type="button" class="btn btn-sm btn-primary" (click)="ativarNovaCategoria()">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+     Adicionar categoria de recebimento
+   </button>
+  </div>
+</div>
+
+ <hr />
+
+ <div class="tabela">
+  <p-table [value]="categoriasRec" dataKey="id" editMode="row">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 70px;">ID</th>
+            <th style="width: 250px;">Descrição</th>
+            <th style="width:12em; text-align: center;">Saldo</th>
+            <th style="width:10em"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cat let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="cat">
+            <td>
+                {{cat.id}}
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="cat.descricao" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{cat.descricao}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td class="center">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input class="form-control form-control-sm" type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                         [(ngModel)]="cat.totalReceita" required>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                      R$ {{cat.totalReceita | number: '1.2-2' }}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+            <td style="text-align:center">
+                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" tooltipPosition="left"
+                pTooltip="Editar esta categoria" class="ui-button-info" style="margin-right: .5em" (click)="onRowEditInit(cat)"></button>
+                <button *ngIf="!editing" pButton type="button" icon="pi pi-trash" tooltipPosition="left" style="margin-right: 8px;"
+                pTooltip="Excluir esta categoria" class="ui-button-danger" (click)="excluir(cat)"></button>
+                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" tooltipPosition="left"
+                 pTooltip="Salvar alteração" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(cat)"></button>
+                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-ban" tooltipPosition="left"
+                pTooltip="Cancelar alteração" class="ui-button-warning" (click)="onRowEditCancel(cat, ri)"></button>
+                <button *ngIf="!editing" pButton type="button" pCancelEditableRow icon="fa fa-history" tooltipPosition="left"
+                pTooltip="Histórico de débito e crédito manual" class="ui-button-secondary" (click)="historico(cat.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+  </p-table>
+ </div>
+
+
+
+ <!-- fecha container -->
+</div>
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>
+
+
+
+<!-- dialog add nova categoria de recebimento -->
+<p-dialog header="Nova Categoria de recebimento" [(visible)]="modoNovaCategoria" [modal]="true" [style]="{width: '45vw'}"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <hr />
+
+    <form autocomplete="off" #f="ngForm" (ngSubmit)="onSubmit(f)">
+       <div class="painel">
+         <fieldset>
+        <div class="row">
+          <div class="col-12 form-group">
+            <div [class.has-danger]="desc.invalid && desc.touched">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="catRec.descricao"  #desc="ngModel"
+                  placeholder="Entre com a descrição da categoria de recebimento" required minlength="3" name="descricao"/>
+                <!--começo da mensagens de validação-->
+              <div class="form-control-feedback"
+              *ngIf="desc.hasError('required') && desc.touched">
+                A descrição é obrigatória</div>
+              <div class="form-control-feedback"
+                *ngIf="desc.hasError('minlength') && desc.dirty">
+                Mínimo de 3 caracteres</div>
+                <!--fim das mensagens de validação do input nome -->
+          </div>
+          </div>
+        </div>
+         <div class="row">
+           <div class="col-6 form-group">
+              <label for="totalReceita" style="margin-bottom: 3px;">Saldo:</label>
+                  <input type="text" class="form-control" [(ngModel)]="catRec.totalReceita" placeholder="0,00"
+                  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" name="saldo">
+              
+           </div>
+         </div>
+      </fieldset>
+      </div>  
+
+      <hr />
+    
+       <div class="painel">
+          <div class="row">
+            <div class="col-12">
+              <button type="button" class="btn btn-sm btn-warning" (click)="cancelarNovaCategoria(f)" id="btn-dialog-cancel">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+                 Cancel
+               </button>
+               <button type="submit" class="btn btn-sm btn-success">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                 Salvar
+               </button>
+            </div>
+          </div>
+       </div>
+    </form>
+
+    <hr />
+
+ </p-dialog>

@@ -1,0 +1,96 @@
+#btnVoltar{
+  margin-top: 20px;
+}
+#titulo {
+  font-weight: 100;
+}
+
+#acao {
+  text-align: center;
+}
+
+
+.btnSalvar {
+  width: 160px;
+}
+
+.corbk {
+  background-color: rgb(219, 233, 220);
+}
+
+.titulo {
+  padding: 20px;
+}
+.col-cor {
+  width: 100px;
+}
+
+#btn-edit {
+  margin-right: 5px;
+}
+
+.colstatus {
+  width: 250px;
+}
+
+.acao {
+  width: 90px;
+  text-align: center;
+}
+#tbBtnCancel {
+  margin-left: 5px;
+}
+.rgh10 {
+  margin-right: 10px;
+}
+.icon {
+  text-decoration: none;
+   margin-right: 8px;
+}
+
+#btnCancelar {
+  margin-left: 5px;
+}
+
+@media screen and (min-width: 900px) {
+
+      #btnExcluir {
+        margin-left: 3px;
+      }
+
+  }
+
+
+  @media screen and (max-width: 767px) {
+
+    #btnConsultar {
+      margin-bottom: 5px;
+    }
+
+
+ }
+
+
+ @media screen and (max-height: 768px) {
+  .alturaMinima {
+    min-height: 568px !important;
+  }
+}
+
+
+
+ @media screen and (min-height: 901px) and (max-height: 1080px) {
+    .alturaMinima {
+      min-height: 880px !important;
+    }
+  }
+
+
+
+  @media screen and (min-height: 700px) and (max-height: 900px) {
+    .alturaMinima {
+      min-height: 690px !important;
+    }
+  }
+
+

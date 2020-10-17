@@ -1,0 +1,76 @@
+
+
+
+.table-responsive {
+  width: 100%;
+  overflow: auto;
+}
+#titulo {
+  font-weight: 300;
+}
+
+.btnNovo {
+  margin-bottom: 10px;
+}
+.col-op {
+  text-align: center;
+  width: 120px;
+}
+.col-telefone {
+  width: 180px;
+}
+.col-email {
+  width: 250px;
+}
+.col-nome {
+  width: 250px;
+}
+.col-obs {
+  width: 300px;
+}
+#btn-edit {
+  margin-right: 5px;
+}
+
+
+
+
+@media screen and (min-width: 900px) {
+  .container-fornecedor-consulta {
+    width: 88%;
+    margin: 0 auto;
+    padding: 30px;
+  }
+
+  #consulta {
+    display: inline;
+    max-width: 450px;
+    margin-right: 5px;
+  }
+
+
+}
+
+
+
+@media screen and (min-width: 768px) and (max-width: 899px) {
+  .container-fornecedor-consulta {
+    width: 98%;
+    margin: 0 auto;
+    padding: 5px;
+  }
+
+  #consulta {
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 767px) {
+
+  .container-fornecedor-consulta {
+    width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+  }
+}

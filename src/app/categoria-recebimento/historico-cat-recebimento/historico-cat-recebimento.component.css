@@ -1,0 +1,25 @@
+
+.container-historico-cat-recebimento {
+    display: flexbox;
+    justify-items: center;
+}
+
+
+
+.painel {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.719);
+    margin-bottom: 20px;
+  }
+
+  .btn-voltar {
+      width: 100%;
+      text-align: left;
+  }
+
+  .tabela {
+      width: 100%;
+      overflow: auto;
+  }

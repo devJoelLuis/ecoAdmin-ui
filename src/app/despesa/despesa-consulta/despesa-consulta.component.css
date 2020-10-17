@@ -1,0 +1,51 @@
+.center {
+  text-align: center;
+}
+
+#titulo {
+  margin-bottom: 0;
+}
+.filtro  label {
+ margin: 0 15px 0 4px;
+
+}
+
+/* tabela*/
+
+.table-responsive {
+  width: 100%;
+  overflow: auto;
+}
+.table-responsive td {
+  font-size: 12px;
+  padding: 8px;
+}
+.table-responsive th {
+  font-size: 13px;
+}
+.col-desc {
+  width: 230px;
+}
+.col-data {
+  width: 145px;
+}
+.col-valor {
+  width: 100px;
+}
+.col-cat {
+  width: 180px;
+}
+.col-os {
+  width: 350px;
+}
+.col-op {
+  width: 100px;
+}
+
+.painel {
+  margin: 15px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.575);
+  background: #fff;
+  border-radius: 5px;
+}

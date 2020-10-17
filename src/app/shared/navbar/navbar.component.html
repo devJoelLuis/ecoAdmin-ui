@@ -1,0 +1,92 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Alterna navegação">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="javascript:;" routerLink="/dash" id="linkDash">
+    <img id="img-coami" src="./../../../assets/img/coami.png" alt="COAMI" width=100>
+  </a>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Administrar
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_CLIENTE'])"
+                   routerLink="/cliente">Cliente</button>
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_TECNICO'])"
+                   routerLink="/tecnico">Técnicos</button>
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FORNECEDOR'])"
+                   routerLink="/fornecedor">Fornecedor</button>
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_USUARIO'])"
+                     routerLink="/usuarios">Usuário</button>
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN'])"
+                     routerLink="/fluxocaixa">Fluxo de caixa</button>       
+
+
+              <!--<div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>-->
+            </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Status/Categoria
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_STATUS_CLIENTE'])"
+                  routerLink="/status">Status de Cliente</button>
+        <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_STATUS_OS'])"
+                  routerLink="/statusOs">Status de O.S.</button>
+        <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_CATEGORIA'])"
+                  routerLink="/categorias">Categorias de Lançamento</button>
+        <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN'])"
+                  routerLink="/categoriasRecebimento">Categorias de Recebimento</button>
+       </div>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Recibo
+           </a>
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <button class="dropdown-item" href="javascript:;" routerLink="/recibo">Recibo</button>
+           </div>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Gerencia
+           </a>
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_OS'])"
+                   routerLink="/ordem-servico/oslist">Ordens de serviços</button>
+
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_LICENCA'])"
+                    routerLink="/licenca-filtro">Licenças</button>
+
+              <button class="dropdown-item" href="javascript:;"  [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_PRAZO'])"
+                   [routerLink]="['/prazos/filtro']" [queryParams]="{param: 'todos'}">
+                  Prazos
+              </button>
+           </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN'])">
+          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Configuração
+           </a>
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN'])"
+                   routerLink="/configuracao">E-mail receptor alertas</button>
+           </div>
+      </li>
+
+    </ul>
+    <hr id="hr-separador" />
+    <ul class="nav navbar-nav navbar-right">
+      <li id="userLogado"><a src="javascript:;" routerLink="/perfil" pTooltip="Editar Perfil" tooltipPosition="bottom"
+           style="color:#fff; text-decoration: none;"> Usuário: <span class="text-uppercase">{{ nomeUsuario }}</span> </a></li>
+      <li id="linkLogout"><a href="javascript:;" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Sair</a></li>
+    </ul>
+</div>
+</nav>

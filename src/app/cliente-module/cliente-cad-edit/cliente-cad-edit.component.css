@@ -1,0 +1,127 @@
+#btnVoltar{
+  margin-top: 20px;
+}
+
+label {
+  font-size: 14px;
+}
+
+
+
+.top10 {
+  margin-top: 10px;
+}
+
+.titulo {
+  padding: 20px 10px 5px 10px;
+}
+
+.btnOp {
+  width: 180px;
+
+}
+#semStatuscad {
+  color: red;
+}
+#semStatus {
+  color: red;
+}
+#btnAddStatus {
+  margin-left: 5px;
+}
+#btnCancelar{
+  margin-left: 10px;
+  margin-top: 10px;
+}
+#btnAdicionar{
+  margin-top: 10px;
+}
+#barraBtn {
+  text-align: center;
+}
+#btnAddSenha {
+  margin-left: 10px;
+}
+.contColor {
+  background-color: rgb(203, 222, 247);
+}
+.contColorEdit {
+  background-color: rgb(243, 236, 176);
+}
+
+.btnNovoStatus {
+  margin-left: 5px;
+}
+.tableSenha{
+  width: 96%;
+  margin: 0 auto;
+  max-height: 300px;
+  overflow: auto;
+}
+.dialogStatus {
+
+  padding: 10px;
+  background-color: rgb(228, 163, 163);
+  border: 1px solid black;
+  border-radius: 5px;
+
+}
+
+#btnCancelarStatus {
+  width: 160px;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+#btnSalvarStatus {
+  width: 180px;
+  margin-top: 5px;
+}
+
+#titleNovoStatus {
+  font-weight: 500;
+  color:red;
+}
+
+/* table senha */
+.colDesc{
+  width: 250px;
+}
+.colSenha{
+ width: 200px;
+}
+.colObs{
+ width: 300px;
+}
+.colOp{
+  width: 100px;
+}
+.colAlgCenter {
+  text-align: center;
+}
+#btnSenhaEdit{
+ margin-right: 5px;
+}
+
+
+
+
+
+
+@media screen and (min-width: 900px) {
+  .btnOp {
+    margin-left: 8px;
+  }
+
+
+}
+
+@media screen and (max-width: 899px) {
+  .btnOp {
+    margin-left: 3px;
+    margin-bottom: 5px;
+  }
+
+
+}
+

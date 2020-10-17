@@ -1,0 +1,82 @@
+<div class="container" *ngIf="!confirmaExclusao">
+
+<div class="form-group">
+  Lançamento: <b>{{ lancamento.descricao }}</b>
+</div>
+
+<div>
+  Total Devido: <b>R${{ lancamento.total - totalRecebido | number: '1.2-2' }}</b>
+</div>
+<hr />
+
+<div class="row">
+  <div class="col-auto form-group">
+    <div><label for="dtreceb">Data do recebimento:</label></div>
+    <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050" id="dtreceb"
+           [(ngModel)]="recebimento.data" [showIcon]="true" [locale]="br.br"
+           name="dtrecebimento" dateFormat="dd/mm/yy"  [inputStyle]="{'width':'70%'}">
+    </p-calendar>
+  </div>
+  <div class="col-auto form-group">
+     <label for="valor">Valor pago:</label>
+     <input type="text" [(ngModel)]="recebimento.valor" placeholder="0,00" id="valor"
+            name="valor" class="form-control form-control-sm" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 form-group">
+    <input type="text" id="fpagamento" name="fpagamento" placeholder="Forma de pagamento"
+           [(ngModel)]="recebimento.formaPagamento" class="form-control form-control-sm" />
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 form-group">
+    <select class="form-control" [(ngModel)]="idCategoriaRec">
+      <option selected value="0">Selecione a categoria...</option>
+      <option *ngFor=" let c of categariasRec" value="{{ c.id }}">{{ c.descricao }}</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 form-group">
+    <textarea  placeholder="Observação"
+           [(ngModel)]="recebimento.obs" class="form-control form-control-sm" ></textarea>
+  </div>
+</div>
+
+<hr />
+
+<div class="row">
+  <div class="col-12 form-group">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="fecharModal()" id="btn-fechar">Fechar</button>
+    <button type="button" class="btn btn-sm btn-success" (click)="salvarRecebimento()"  id="btn-salvar">Salvar</button>
+    <button type="button" class="btn btn-sm btn-danger" (click)="confirmarExclusao()" *ngIf="modoEdicao">Excluir</button>
+  </div>
+</div>
+
+ <!-- fecha container -->
+</div>
+
+
+
+<div class="container" *ngIf="confirmaExclusao">
+
+   <hr />
+     <h6 class="has-danger">Tem certeza que deseja excluir o recebimento de R$ {{ recebimento.valor | number: '1.2-2' }}?</h6>
+   <hr />
+   <button type="button" class="btn  btn-secondary" id="btn-sim" (click)="excluir()">Sim</button>
+   <button type="button" class="btn  btn-secondary" (click)="cancelarExclusao()">Não</button>
+
+
+</div>
+
+
+
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

@@ -1,0 +1,58 @@
+#titulo {
+  font-weight: 300;
+}
+#input-consulta {
+  width: 75%;
+}
+#btn-consultar {
+  margin-left: 10px;
+}
+.table-usuarios {
+  overflow: auto;
+}
+
+.col-nome {
+  width: 220px;
+}
+.col-email {
+  width: 220px;
+}
+.col-obs {
+  width: 300px;
+}
+.col-opcao {
+  width: 120px;
+}
+.center {
+  text-align: center;
+}
+#btn-edit {
+  margin-right: 10px;
+}
+
+
+
+
+@media screen and (max-width: 512px) {
+   .bg-color {
+     padding: 10px !important;
+   }
+   #input-consulta {
+    width: 68%;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  #btn-voltar{
+    margin-bottom: 20px;
+  }
+
+}
+
+
+
+
+
+
+
+

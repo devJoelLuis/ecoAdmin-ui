@@ -1,0 +1,25 @@
+.container-licenca-cad-edit {
+  width: 100%;
+}
+#titulo {
+  font-weight: 200;
+}
+.top20 {
+  margin-top: 20px;
+}
+#btnSalvar {
+  width: 180px;
+  margin-right: 10px;
+}
+#btnCancelar {
+  width: 180px;
+}
+#input-numero {
+  width: 150px;
+}
+#input-valor {
+  width:  150px;
+}
+#ultimo-num {
+  color: red;
+}

@@ -1,0 +1,122 @@
+
+<div class="container-custom bg-color alturaMinima">
+
+  <p-button  icon="fa fa-arrow-left" (click)="voltarPagina()" label="Voltar" ></p-button>
+
+  <hr />
+
+
+   <h5 id="titulo">Consulta de clientes cadastrados</h5>
+
+
+   <hr />
+
+  <div class="row">
+    <div class="col-12">
+        <div id="check-cnfantasia">
+          <p-checkbox [(ngModel)]="consultaNomeFantasia" name="cnf" binary="true"></p-checkbox>
+          Consultar por nome fantasia
+        </div>
+        <input class="form-control form-control-sm text-uppercase" id="consulta" [(ngModel)]="consultaString"
+          type="text"  placeholder="{{ consultaNomeFantasia ? 'Nome Fantasia' : 'Nome do cliente' }}"
+          aria-label="Search" (keyup)="onKey($event)"  maxlength=60/>
+
+         <p-button icon="fa fa-search" label="Consultar" (click)="ordenar('nome'); page=0" id="btnConsultar" ></p-button>
+
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row btnNovo">
+    <div class="col-12">
+      <p-button icon="fa fa-user-o" label="Novo Cliente" (click)="novoCliente()" ></p-button>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="table-responsive tabela-empresa">
+
+      <p-table [value]="listCliente" class="table table-striped table-bordered"
+      [responsive]="true" *ngIf="listCliente?.length > 0">
+          <ng-template pTemplate="caption">
+              Lista de clientes
+          </ng-template>
+
+          <ng-template pTemplate="header" >
+           <tr>
+             <th class="colnome">
+                  <a href="javascript:;" pTooltip="Ordenar por nome" tooltipPosition="top">
+                    <span class="fa fa-caret-down rgh10" (click)="ordenar('nome')" *ngIf="!nomeOrder"></span>
+                    <span class="fa fa-caret-up rgh10" (click)="ordenar('nomeDesc')" *ngIf="nomeOrder"></span>
+                  </a>
+              Nome</th>
+             <th class="colnomef">
+                  <a href="javascript:;" pTooltip="Ordenar por nome fantasia" tooltipPosition="top">
+                    <span class="fa fa-caret-down rgh10" (click)="ordenar('nomef')" *ngIf="!nomefOrder" ></span>
+                    <span class="fa fa-caret-up rgh10" (click)="ordenar('nomefDesc')" *ngIf="nomefOrder"></span>
+                  </a>
+               Nome fantasia</th>
+             <th class="coltel">
+                <a href="javascript:;" pTooltip="Ordenar por telefone" tooltipPosition="top">
+                    <span class="fa fa-caret-down rgh10" (click)="ordenar('tel')" *ngIf="!telOrder"></span>
+                    <span class="fa fa-caret-up rgh10" (click)="ordenar('telDesc')" *ngIf="telOrder"></span>
+                  </a>
+               Telefones</th>
+             <th class="colcel">
+                <a href="javascript:;" pTooltip="Ordenar por celular" tooltipPosition="top">
+                    <span class="fa fa-caret-down rgh10" (click)="ordenar('cel')" *ngIf="!celOrder"></span>
+                    <span class="fa fa-caret-up rgh10" (click)="ordenar('celDesc')" *ngIf="celOrder"></span>
+                  </a>
+               Celulares</th>
+             <th class="colStatus"> Status</th>
+             <th class="acao">Ações</th>
+           </tr>
+          </ng-template>
+
+           <ng-template pTemplate="body" let-cli>
+             <tr>
+               <td> {{ cli?.nome }}</td>
+               <td> {{ cli?.nomeFantasia }} </td>
+               <td> {{ cli?.telefone }} </td>
+               <td> {{ cli?.celular }} </td>
+               <td> {{ cli?.statusCli?.statusCli }} </td>
+               <td class="acao">
+                    <button class="btn btn-sm text-info" pTooltip="Editar Cliente" tooltipPosition="top">
+                      <span class="fa fa-pencil " [routerLink]="['/cliente',cli.id]"></span>
+                    </button>
+                    <button class="btn btn-sm text-info" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_CLIENTE_GERENCIAR'])"
+                       pTooltip="Gerenciar"
+                       tooltipPosition="top" [routerLink]="['/cliente/gerencia', cli.id]">
+                       <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                  </button>
+                    <button class="btn btn-sm text-danger" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_CLIENTE_EXCLUI'])"
+                        pTooltip="Excluir Cliente" tooltipPosition="top"  (click)="confirmarExclusao(cli.nome, cli.id)">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+               </td>
+             </tr>
+            </ng-template>
+
+
+      </p-table>
+
+  </div>
+  <div class="row top 10" *ngIf="totalRegistro > 10">
+      <div class="col-12">
+          <p-paginator [rows]="size" [totalRecords]="totalRegistro" [rowsPerPageOptions]="[10,20,30,40]"
+          (onPageChange)="paginate($event)"></p-paginator>
+      </div>
+  </div>
+
+  <hr />
+
+</div><!--Fecha container-->
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

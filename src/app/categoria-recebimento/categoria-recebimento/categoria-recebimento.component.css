@@ -1,0 +1,20 @@
+#titulo {
+  font-weight: 100;
+}
+.center {
+  text-align: center;
+}
+#btn-dialog-cancel {
+  margin-right: 10px;
+}
+.painel {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.719);
+  margin-bottom: 20px;
+}
+.tabela {
+  width: 100%;
+  overflow: auto;
+}

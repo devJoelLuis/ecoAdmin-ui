@@ -1,0 +1,169 @@
+.container-os-listagem {
+  background-color: rgb(219, 233, 220);
+  padding: 10px;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+#span-imprimir :hover{
+  cursor: pointer;
+}
+#span-imprimir > i {
+  color: blue;
+}
+.center {
+  text-align: center;
+}
+.top15 {
+  margin-top: 15px;
+}
+#lb-ano {
+  margin-right: 10px;
+}
+#input-ano {
+  width: 80px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#radio-descricao {
+  margin-right: 10px;
+}
+
+#input-consultar {
+  margin-right: 5px;
+}
+#drop-status {
+  margin-right: 5px;
+}
+
+.tabela {
+  width: 100%;
+  overflow: auto;
+}
+
+.col-expand {
+  width: 60px;
+}
+.col-num {
+  width: 80px;
+}
+.col-cliente {
+  width: 285px;
+}
+.col-desc {
+  width: 290px;
+}
+.col-pendencia {
+  width: 150px;
+}
+.col-pendenciasv {
+  width: 120px;
+}
+.col-status {
+  width: 140px;
+}
+.col-obs {
+  width: 300px;
+}
+.col-imp {
+  width: 130px;
+}
+.col-alt {
+  width: 95px;
+}
+.pendenciaf > td {
+  color: red;
+}
+#btn-tarefa {
+  margin-right: 5px;
+}
+
+.colDesc {
+  width: 250px;
+}
+.colValor {
+  width: 150px;
+}
+.colfp {
+  width: 150px;
+}
+.colVenc {
+  width: 100px;
+}
+.colStatus {
+  width: 100px;
+}
+.row-ser {
+  width: 100%;
+  overflow: auto;
+}
+.devedorVencido > td {
+  background-color: rgb(253, 82, 82);
+}
+.devedor > td {
+  background-color: rgb(243, 227, 174);
+}
+.pago > td {
+  background-color: rgb(176, 245, 167);
+}
+#link-expand {
+  text-decoration: none;
+}
+#caption-servico {
+  width: 480px;
+}
+.btn-table {
+  margin-right: 5px;
+}
+label {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 1366px) {
+  .container-os-listagem {
+    max-width: 1300px;
+  }
+   tr > th {
+     font-size: 13px;
+   }
+   tr > td {
+     font-size: 12px;
+   }
+}
+
+@media screen and (min-width: 900px) {
+
+  .container-os-listagem {
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  #input-consultar {
+    width: 30%;
+  }
+
+}
+
+
+@media screen and (max-width: 899px) {
+
+.container-ordem-s-listagem {
+  padding: 6px;
+}
+
+#input-consultar {
+  width: 50%;
+}
+}
+
+
+
+@media screen and (max-width: 640px) {
+  #input-consultar {
+    width: 60%;
+  }
+  #btn-consultar {
+    margin-top: 10px;
+  }
+}

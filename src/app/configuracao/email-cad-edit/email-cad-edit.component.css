@@ -1,0 +1,14 @@
+.bg-color-edit {
+  background-color: rgb(243, 236, 176);
+}
+.bg-color-novo {
+  background-color: rgb(203, 222, 247);
+}
+
+.alturaMinima {
+  padding: 20px;
+}
+.btn {
+  width: 100px;
+  margin-right: 20px;
+}

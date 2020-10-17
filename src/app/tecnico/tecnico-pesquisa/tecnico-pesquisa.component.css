@@ -1,0 +1,82 @@
+#titulo {
+  font-weight: 200;
+}
+
+.container-pesquisa {
+  margin: 0 auto;
+  padding: 20px;
+}
+.tabela {
+  width: 100%;
+  overflow-y: hidden;
+  overflow: auto;
+}
+/* colunas da table */
+.colNome {
+  width: 250px;
+}
+.colTel {
+  width: 120px;
+}
+.colEmail {
+  width: 200px;
+}
+.colObs {
+  width: 250px;
+}
+.colOp {
+  text-align: center;
+  width: 100px;
+}
+#iconExcluir {
+  color: red;
+}
+
+
+
+
+
+
+@media screen and (min-width: 900px) {
+  #consulta {
+    display: inline;
+    max-width: 450px;
+  }
+
+  #btnConsultar {
+    margin-left: 10px;
+  }
+
+  .container-pesquisa {
+    width: 88%;
+  }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 899px) {
+  #consulta {
+    display: inline;
+    max-width: 80%;
+  }
+
+  #btnConsultar {
+    margin-left: 10px;
+  }
+
+  .container-pesquisa {
+    width: 94%;
+  }
+
+}
+
+@media screen and (max-width: 767px) {
+
+  #btnConsultar {
+    margin-top: 10px;
+  }
+
+  .container-pesquisa {
+    width: 98%;
+  }
+
+}

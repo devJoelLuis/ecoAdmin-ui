@@ -1,0 +1,115 @@
+<div class="container-osfind" *ngIf="!dialogLancamento">
+
+  <div class="row">
+    <div class="col-auto">
+      <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        Voltar
+      </button>
+    </div>
+    <div class="col-12 col-md-7">
+      <h4 id="titulo">Selecione a O.S. para o {{ tipoSelecao }}</h4>
+    </div>
+  </div>
+
+  <hr />
+
+   <div class="row">
+     <div class="col-12">
+      <p-checkbox [(ngModel)]="porNomeCliente" binary="true" inputId="binary"></p-checkbox>
+      <label id="lb-por-nome">Consultar por nome do cliente.</label>
+     </div>
+   </div>
+  <div class="row">
+    <div class="col-md-12 form-group form-inline"  >
+      <input type="text" class="form-control form-control-sm" placeholder="Nº/ano ou parte da descrição da O.S." id="input-consulta-os"
+      [(ngModel)]="param" name="consulta" (keyup)="keyup($event)" *ngIf="!porNomeCliente"/>
+
+      <input type="number" class="form-control form-control-sm" name="anoOs" [(ngModel)]="ano" id="input-ano" *ngIf="porNomeCliente">
+      <input type="text" class="form-control form-control-sm" placeholder="Digite parte do nome do Cliente" id="input-consulta-nome"
+      [(ngModel)]="param" name="consulta" (keyup)="keyup($event)" *ngIf="porNomeCliente"/>
+
+      <button type="button"  class="btn btn-sm btn-primary" (click)="consultarOs()">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        Consultar
+      </button>
+    </div>
+
+  </div>
+
+  <div class="tabela">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th class="col-num">Nº O.S.</th>
+        <th class="col-nomecli">Cliente</th>
+        <th class="col-desc">Descrição</th>
+        <th class="col-op center">Opção</th>
+     </tr>
+    </thead>
+    <tbody>
+      <tr class="linha" *ngFor="let os of oss">
+        <td>{{ os.numOs }}/{{ os.anoOs}}</td>
+        <td>{{ os.cliente.nome }}</td>
+        <td>{{ os.local }}</td>
+        <td class="center">
+          <button type="button" class="btn btn-sm btn-danger" (click)="selecionarOsLancamento(os)"
+                  *ngIf="tipoSelecao == 'lançamento'"
+                  pTooltip="Novo lançamento para esta O.S." tooltipPosition="left">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="gotoLancamentosFinancas(os.id)" id="btn-financas"
+                       pTooltip="Financeiro" tooltipPosition="left" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
+                       <i class="fa fa-calculator" aria-hidden="true"></i>
+            </button>
+
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="oss?.length == 0">
+      <tr>
+        <th class="danger">Nenhum registro encontrado</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+  <!-- fecha container -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- dialog lançamento -->
+<div class="container-osfind" *ngIf="dialogLancamento">
+
+    <app-lancamento-cad-edit *ngIf="dialogLancamento"
+                             [idlancamento]="0"
+                             [idOs]="idOsSelecionada"
+                             (fimCadEdit)="cancelarNovoLancamento()">
+    </app-lancamento-cad-edit>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

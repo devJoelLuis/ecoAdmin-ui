@@ -1,0 +1,120 @@
+
+.container-custom {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+
+.bk-color {
+  background-color: rgb(219, 233, 220);
+  padding: 20px;
+}
+
+
+
+.top5 {
+  margin-top: 5px;
+}
+.top15 {
+  margin-top: 15px;
+}
+.tabela {
+  width: 100%;
+  overflow: auto;
+}
+.col-os {
+  width: 120px;
+}
+.col-cliente {
+  width: 250px;
+}
+.col-desc {
+  width: 250px;
+}
+.col-dtvenc {
+  width: 180px;
+}
+.col-dtalerta {
+  width: 230px;
+}
+.col-op {
+  width: 180px;
+}
+.center {
+  text-align: center;
+}
+.btn-table {
+  margin-right: 10px;
+}
+.bk-edit-row  > td {
+  background-color: rgb(243, 236, 176);
+}
+#ck-alerta {
+  display: inline;
+  margin-right: 5px;
+}
+.em-alerta > td {
+  background-color: rgba(241, 109, 109, 0.795);
+}
+.vencido > td {
+  color: rgb(139, 8, 8);
+  font-weight: bold;
+  font-style: italic;
+}
+.cumprido > td {
+  color: black;
+  background-color: rgba(204, 199, 199, 0.795);
+}
+#input-numOs {
+  width: 70px;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+#input-anoOs {
+  width: 70px;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 1366px) {
+
+  .container-custom {
+    max-width: 1300px;
+  }
+
+  tr > th {
+    font-size: 14px;
+  }
+
+  tr > td {
+    font-size: 12px;
+  }
+
+}
+
+
+
+
+
+@media screen and (max-width: 899px) {
+
+  .bk-color {
+    padding: 10px;
+  }
+
+
+
+}

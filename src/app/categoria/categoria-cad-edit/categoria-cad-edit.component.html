@@ -1,0 +1,42 @@
+<div [class]="cssContainer">
+
+
+
+
+     <h5 id="titulo">{{ titulo }}</h5>
+
+
+     <hr />
+
+
+
+     <div class="row top20">
+       <div class="col-12 col-md-6">
+          <label>Descrição:</label>
+          <input type="text" class="form-control form-control-sm" placeholder="Descrição da categoria"
+             name="input-desc" [(ngModel)]="categoria.descricao">
+       </div>
+
+     </div>
+
+ <hr />
+
+ <div class="row">
+    <div class="col-12" id="barraBtn">
+
+        <button pButton type="button" class="btnOp ui-button-success" (click)="salvar()"
+           icon="fa fa-floppy-o" iconPos="left" label="Salvar" id="btn-salvar"></button>
+
+        <button pButton type="button" class="btnOp" (click)="voltarPagina()"
+        icon="fa fa-arrow-left" iconPos="left" label="Voltar" id="btn-voltar"></button>
+      </div>
+  </div>
+
+<hr />
+
+  <!-- fecha container -->
+</div>
+
+<div *ngIf="load" class="loadcss">
+    <img src="./../../../assets/img/load2.gif">
+  </div>

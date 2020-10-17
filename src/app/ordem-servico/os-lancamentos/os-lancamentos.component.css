@@ -1,0 +1,100 @@
+.container-os-lancamento {
+  width: 96% !important;
+  margin: 0 auto;
+  padding: 20px;
+}
+#titulo {
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+#titulo > h3 {
+  font-weight: 300;
+}
+.center {
+  text-align: center;
+}
+.aberto {
+  color: rgb(173, 7, 7);
+  font-weight: bold;
+}
+.pago {
+  color: green;
+}
+#tabela {
+  width: 100%;
+  overflow: auto;
+}
+#btn-editar {
+  margin-right: 5px;
+}
+table > * {
+  font-size: 15px;
+}
+.row-custom {
+  width: 100%;
+}
+table > tbody > tr > td {
+  padding: 8px !important;
+}
+#btn-pago {
+  margin-right: 5px;
+}
+.nopadding {
+  padding: 0 !important;
+}
+.filtro-top{
+  margin-top: 30px;
+}
+.btn-consultar {
+  margin-left: 50px;
+}
+.content {
+  display: block;
+  width: 300px;
+  padding: 5px;
+}
+.modal-header {
+  background-color: darkblue;
+  color: white;
+}
+
+.col-pago {
+  color: green;
+  font-weight: 300;
+}
+
+.row-recebidos > td {
+   color: green;
+   font-weight: 300;
+}
+.tb-recebido > tbody > tr {
+  cursor: pointer;
+}
+.tb-recebido > tbody > tr:hover {
+  background-color: rgb(160, 158, 158);
+}
+.bloco {
+  width: 150px;
+}
+
+
+
+@media screen and (max-width: 1011px) {
+  .btn-consultar {
+    margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 899px) {
+
+      .container-os-lancamento {
+        width: 100%;
+        padding: 5px;
+      }
+
+      .filtro-top{
+        margin-top: 10px;
+      }
+
+  }

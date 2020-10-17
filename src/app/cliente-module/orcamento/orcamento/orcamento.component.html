@@ -1,0 +1,20 @@
+
+<div class="container-orcamento alturaMinima" *ngIf="semPermissao">
+
+  <div style="width: 300px; margin: 0 auto; text-align: center;">
+    <h6 class="text-danger">SEM PERMISSÃO</h6>
+ </div>
+
+</div>
+
+
+
+<div class="container-orcamento" *ngIf="!semPermissao">
+
+  <app-orcamento-consulta *ngIf="!cadEdit" (novoOuEdit)="cadOuEdit($event)"
+    [idcliente]="idcliente"></app-orcamento-consulta>
+
+  <app-orcamento-cad-edit *ngIf="cadEdit" [idOrcamento]="idOrcamento" [idcliente]="idcliente"
+     (fimCadEdit)="consultar($event)"></app-orcamento-cad-edit>
+
+</div>

@@ -1,0 +1,32 @@
+.bk-cor {
+  background-color: rgb(219, 233, 220);
+  padding: 10px;
+}
+.table-responsive {
+  width: 100%;
+  overflow: auto;
+}
+.center {
+  text-align: center;
+}
+.top15 {
+  margin-top: 15px;
+}
+.col-desc {
+  width: 200px;
+}
+.col-obs {
+  width: 250px;
+}
+.col-tipo {
+  width: 120px;
+}
+
+.col-op {
+  width: 110px;
+}
+
+
+.left10 {
+  margin-left: 10px;
+}

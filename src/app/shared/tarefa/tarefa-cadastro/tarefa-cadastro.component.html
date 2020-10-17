@@ -1,0 +1,41 @@
+<div style="height: 40px;">
+  <div class="alert alert-warning" role="alert" [@comTransacao]
+      *ngIf="erroNovaTarefa?.length > 0" (click)="alertaTarefaOff()">
+    {{ erroNovaTarefa }}
+  </div>
+</div>
+   <hr />
+     <h6>{{ headerTarefa }}</h6>
+   <hr />
+    <div class="row">
+      <div class="col-12 form-group">
+        <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="idtecnicoTarefa" >
+          <option selected value="0" >Selecione o técnico da tarefa</option>
+          <option *ngFor="let t of tecnicosDto" value="{{ t.id }}">{{ t.nome }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 form-group">
+        <textarea type="text" class="form-control form-control-sm" maxlength="255"
+            placeholder="Descrição da tarefa" [(ngModel)]="tarefa.descricao">
+
+        </textarea>
+        <div>Caracteres restantes {{ 255 - tarefa?.descricao?.length }}</div>
+      </div>
+    </div>
+  <hr />
+  <button type="button" class="btn btn-sm btn-warning" (click)="cancelaNovaTarefa()" id="btn-cancelar-tarefa">
+    <i class="fa fa-ban" aria-hidden="true"></i>
+    Cancelar
+  </button>
+  <button type="button" class="btn btn-sm btn-success" (click)="salvarNovaTareva()">
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    Salvar
+  </button>
+
+
+
+  <div *ngIf="load" class="loadcss">
+    <img src="./../../../assets/img/load2.gif">
+ </div>

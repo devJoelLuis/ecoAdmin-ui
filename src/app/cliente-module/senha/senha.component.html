@@ -1,0 +1,122 @@
+
+<div class="container-senha alturaMinima" *ngIf="semPermissao">
+
+   <div style="width: 300px; margin: 0 auto; text-align: center;">
+     <h6 class="text-danger">SEM PERMISSÃO</h6>
+  </div>
+
+</div>
+
+
+
+
+
+<div class="container-senha alturaMinima" *ngIf="!semPermissao">
+
+  <div class="row" *ngIf="listSenha?.length == 0">
+    <div class="col-12">
+      <h5>Nenhuma senha cadastrada</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <button pButton type="button" label="Adicionar Senha" icon="fa fa-plus" (click)="ativaModoCadastro()"
+           [disabled]="modoEdicao || modoCadastro"></button>
+    </div>
+  </div>
+
+  <hr />
+<div *ngIf="modoCadastro">
+  <div class="row">
+    <div class="col-12">
+        <label>Login:</label>
+        <input type="text" name="obs" class="form-control form-control-sm"
+        [(ngModel)]="senha.obs" placeholder="Digite o login do cliente">
+    </div>
+</div>
+  <div class="row  top10">
+       <div class="col-12 col-md-6">
+         <label>Descrição:</label>
+         <input type="text" name="desc" class="form-control form-control-sm"
+         [(ngModel)]="senha.descricao" placeholder="Descrição">
+       </div>
+       <div class="col-12 col-md-6">
+          <label>Senha:</label>
+          <input type="text" name="senha" class="form-control form-control-sm"
+          [(ngModel)]="senha.senha" placeholder="Senha">
+       </div>
+  </div>
+
+  <div class="row top10" >
+    <div class="col-12">
+        <button pButton type="button" label="Salvar" icon="fa fa-floppy-o"
+        class="ui-button-success" id="btnSalvar" (click)="cadastrarSenha()"></button>
+      <button pButton type="button" label="Voltar" icon="fa fa-arrow-left"
+      class="ui-button-info" (click)="desativaModoCadastro()"></button>
+    </div>
+  </div>
+
+  <hr />
+</div>
+
+
+  <div class="row" *ngIf="listSenha?.length > 0">
+    <div class="col-12">
+      <div class="table-senha">
+        <p-table  [value]="listSenha" [responsive]="true">
+          <ng-template pTemplate="caption">
+              Senhas cadastradas
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th class="colDesc">Descrição</th>
+                  <th class="colObs">Login</th>
+                  <th class="colSenha">Senha</th>
+                  <th class="center colOp">Opções</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-s>
+              <tr *ngIf="!s.edit">
+                  <td>{{ s.descricao }}</td>
+                  <td>{{ s.obs }}</td>
+                  <td>{{ s.senha }}</td>
+                  <td class="center">
+                    <button pButton icon="fa fa-pencil-square-o" (click)="ativaModoEditar(s)" tooltipPosition="left"
+                       pTooltip="Editar senha" class="ui-button-info" [disabled]="modoEdicao" id="btnEditSenha"></button>
+
+                       <button pButton icon="fa fa-trash-o" (click)="excluirSenha(s)" tooltipPosition="left"
+                       [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_SENHA_EXCLUI']) || modoEdicao"
+                       pTooltip="Excluir senha" class="ui-button-danger"></button>
+
+                  </td>
+              </tr>
+              <tr *ngIf="s.edit">
+                  <td><input type="text" name="descEd" class="form-control form-control-sm"
+                    [(ngModel)]="s.descricao" placeholder="Descrição"></td>
+                  <td><input type="text" name="descEd" class="form-control form-control-sm"
+                    [(ngModel)]="s.obs" placeholder="login"></td>
+                  <td><input type="text" name="obsEd" class="form-control form-control-sm"
+                    [(ngModel)]="s.senha" placeholder="senha"></td>
+                  <td class="center">
+                      <button pButton icon="fa fa-floppy-o" type="button" (click)="salvarEdicao(s)" id="btnSalvaredit"
+                         pTooltip="Salvar Edição" class="ui-button-success" tooltipPosition="left"></button>
+                      <button pButton icon="fa fa-ban" (click)="desativaModoEditar(s)" type="button"
+                      pTooltip="Cancelar Edição" class="ui-button-warning" tooltipPosition="left"></button>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
+      </div>
+    </div>
+  </div>
+
+
+</div><!--Fecha container-->
+
+
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

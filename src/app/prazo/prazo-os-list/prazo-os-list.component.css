@@ -1,0 +1,95 @@
+.bk-color {
+  background-color: rgb(219, 233, 220);
+  padding: 20px;
+}
+#titulo {
+  font-weight: 300;
+}
+.span-os {
+  font-size: 16px;
+  font-weight: 300;
+  display: block;
+  color: green;
+  padding: 5px;
+  border: 1px solid blue;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.cumprido > td {
+  color: black;
+  background-color: rgba(204, 199, 199, 0.795);
+}
+.top5 {
+  margin-top: 5px;
+}
+.top15 {
+  margin-top: 15px;
+}
+.tabela {
+  width: 100%;
+  overflow: auto;
+}
+.center {
+  text-align: center;
+}
+.col-desc {
+  width: 350px;
+}
+.col-dtvenc {
+  width: 180px;
+}
+.col-dtalerta {
+  width: 230px;
+}
+.col-op {
+  width: 150px;
+}
+#lbDataAlerta {
+  margin-left: 10px;
+}
+.btn-form {
+  width: 100px;
+  margin-right: 10px;
+}
+.btn-table {
+  margin-right: 10px;
+}
+.bk-edit-row  > td {
+  background-color: rgb(243, 236, 176);
+}
+#ck-alerta {
+  display: inline;
+  margin-right: 5px;
+}
+.em-alerta > td {
+  background-color: rgba(241, 109, 109, 0.795);
+}
+.vencido > td {
+  color: rgb(139, 8, 8);
+  font-weight: bold;
+  font-style: italic;
+}
+
+
+
+
+
+
+
+
+@media screen and (max-width: 899px) {
+
+  .bk-color {
+    background-color: rgb(219, 233, 220);
+    padding: 10px;
+  }
+  #titulo {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .span-os {
+    font-size: 11px;
+    font-weight: 400;
+    width: 100%;
+  }
+}

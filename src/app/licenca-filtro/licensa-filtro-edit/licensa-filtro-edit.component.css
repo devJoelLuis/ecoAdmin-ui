@@ -1,0 +1,26 @@
+.bkg-cor {
+  background-color: rgb(243, 236, 176);
+}
+
+.pad20 {
+  padding: 20px;
+}
+.top20 {
+  margin-top: 20px;
+}
+#btnSalvar {
+  width: 180px;
+  margin-right: 10px;
+}
+#btnCancelar {
+  width: 180px;
+}
+#input-numero {
+  width: 150px;
+}
+#input-valor {
+  width:  150px;
+}
+#ultimo-num {
+  color: red;
+}

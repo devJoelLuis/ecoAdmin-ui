@@ -1,0 +1,155 @@
+<div [class]="containerCss">
+
+<div class="row" style="padding: 10px;">
+  <div class="col-12 col-md-2">
+      <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+         Voltar
+       </button>
+  </div>
+</div>
+
+   <div class="row">
+    <div class="col-12 center">
+     <div class="painel" style="margin-top: 10px;">
+        
+      <h4 id="titulo">{{ titulo }}</h4>
+     </div>
+
+    </div>
+   </div>
+
+
+
+
+
+<div class="painel">
+  <fieldset>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <label [class.text-danger]="inputNome">Nome Completo*:</label>
+      <input type="text" name="nomec" maxlength="60" [(ngModel)]="usuario.nome" id="nomeUser"
+      (blur)="usuario?.nome?.length > 0 ? inputNome = false : inputNome = true"
+          placeholder="Nome completo do usuário" class="form-control form-control-sm text-uppercase">
+    </div>
+    <div class="col-12 col-md-6">
+        <label  [class.text-danger]="inputEmail">E-mail*:</label>
+        <input type="text" name="email" maxlength="60" [(ngModel)]="usuario.email" id="emailUser"
+        (blur)="usuario?.email?.length > 0 ? inputEmail = false : inputEmail = true"
+          placeholder="E-mail do usuário" class="form-control form-control-sm text-lowercase">
+    </div>
+  </div>
+
+  <div class="row top-15" *ngIf="edicao">
+    <div class="col-12">
+      <label id="lb-altera-senha">Alterar Senha </label>
+      <p-checkbox [(ngModel)]="alteraSenha" binary="true"></p-checkbox>
+    </div>
+  </div>
+
+  <div class="row top-15" *ngIf="!edicao || alteraSenha">
+      <div class="col-12 col-md-6">
+        <label  [class.text-danger]="inputSenha">Senha*:</label>
+        <input type="password" name="senhau" maxlength="20" [(ngModel)]="usuario.senha" id="senhaUser"
+          (blur)="usuario?.senha?.length > 5 ? inputSenha = false : inputSenha = true"
+            placeholder="Senha mínimo seis dígitos" class="form-control form-control-sm">
+      </div>
+      <div class="col-12 col-md-6">
+          <label  [class.text-danger]="inputResenha">Re-senha*:</label>
+          <input type="password" name="resenhau" maxlength="20" [(ngModel)]="resenha" id="resenhaUser"
+          (blur)="resenha?.length > 0 ? inputResenha = false : inputResenha = true"
+            placeholder="Re-digite a senha" class="form-control form-control-sm">
+      </div>
+    </div>
+
+    <div class="row top-15">
+      <div class="col-12 col-md-5">
+        <div><label>Observação:</label></div>
+        <textarea class="form-control" name="obsu" [(ngModel)]="usuario.obs" maxlength="255"></textarea>
+        <div id="count-obs">Caracteres restantes {{ 255 - usuario?.obs?.length }}</div>
+      </div>
+    </div>
+  </fieldset>  
+</div>
+
+
+
+
+<div class="painel">
+  <div class="row">
+    <div class="col-12 col-md-6 table-p">
+        <p-table [value]="permissoes" [responsive]="true" >
+            <ng-template pTemplate="caption">
+               <span>Permissões disponíveis</span>
+            </ng-template>
+            <ng-template pTemplate="header" >
+                <tr>
+                    <th class="col-role">Permissão</th>
+                    <th class="col-botao"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-p >
+                <tr>
+                    <td>{{ p.role }}</td>
+                    <td class="center">
+                      <button id="btn-edit" type="button" (click)="addPermissao(p)"
+                      class="btn btn-sm  btn-primary" pTooltip="Adicionar" tooltipPosition="left">
+                          <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="col-12 col-md-6 table-p">
+        <p-table [value]="usuario.permissoes" [responsive]="true">
+            <ng-template pTemplate="caption">
+               <span  [class.text-danger]="tablePermissao && usuario?.permissoes?.length == 0">Permissões do usuário*:</span>
+            </ng-template>
+            <ng-template pTemplate="header" >
+                <tr>
+                    <th class="col-botao"></th>
+                    <th class="col-role">Permissão</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-p >
+                <tr>
+                    <td class="center">
+                        <button id="btn-edit" type="button" (click)="removePermissao(p)"
+                        class="btn btn-sm  btn-warning" pTooltip="Remover" tooltipPosition="left">
+                            <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                        </button>
+                      </td>
+                    <td>{{ p.role }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+  </div>
+</div>
+
+
+  <div class="painel">
+     <button type="button" (click)="preCadastro()"
+         class="btn btn-sm btn-success" id="btn-salvar" >
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        Salvar
+      </button>
+
+      <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+         Voltar
+        </button>
+</div>
+
+<hr />
+
+  <!-- fecha container -->
+</div>
+
+
+
+<!-- loading -->
+<div *ngIf="load" class="loadcss">
+    <img src="./../../../assets/img/load2.gif">
+</div>

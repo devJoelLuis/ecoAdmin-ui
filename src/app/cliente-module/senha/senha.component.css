@@ -1,0 +1,39 @@
+.container-senha {
+  width: 100%;
+}
+.table-senha {
+  width: 100%;
+  overflow: auto;
+}
+
+.center{
+ text-align: center;
+}
+#btnSalvar {
+  width: 99px;
+  margin-right: 10px;
+}
+.top10 {
+  margin-top: 10px;
+}
+#btnSalvaredit{
+  margin-right: 5px;
+}
+#btnEditSenha {
+  margin-right: 5px;
+}
+
+@media screen and (min-width: 640px) {
+  .colDesc{
+    width: 300px
+   }
+   .colSenha{
+     width: 200px
+   }
+   .colObs{
+     width: 350px
+   }
+   .colOp{
+    width: 100px;
+  }
+}

@@ -1,0 +1,136 @@
+<div class="container-custom alturaMinima bk-color">
+
+  <h5>Filtro de Prazos</h5>
+
+  <button type="button" class="btn btn-sm btn-primary" (click)="goback()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Voltar
+  </button>
+
+  <hr />
+      <div class="row">
+        <div class="col-12 col-md-auto form-inline">
+          <input id="input-numOs" type="number" placeholder="O.S. Nº" [(ngModel)]="numOs" min="1"> /
+          <input id="input-anoOs" type="number" placeholder="Ano" [(ngModel)]="anoOs" min="2000" max="2100">
+          <button type="button" class="btn btn-sm btn-primary" (click)="consultaPorOs()">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            Consultar
+          </button>
+        </div>
+        <div class="col-12 col-md-auto">
+          <p-radioButton name="group1" value="vencido" label="Vencido" [(ngModel)]="param" (ngModelChange)="consultarPrazo()" inputId="opt1"></p-radioButton>
+        </div>
+        <div class="col-12 col-md-auto">
+          <p-radioButton name="group1" value="vencendo" label="Vencendo" [(ngModel)]="param" (ngModelChange)="consultarPrazo()" inputId="opt2"></p-radioButton>
+        </div>
+        <div class="col-12 col-md-auto">
+          <p-radioButton name="group1" value="alerta" label="Alerta" [(ngModel)]="param" (ngModelChange)="consultarPrazo()" inputId="opt3"></p-radioButton>
+        </div>
+        <div class="col-12 col-md-auto">
+          <p-radioButton name="group1" value="todos" label="Todos" [(ngModel)]="param" (ngModelChange)="consultarPrazo()" inputId="opt4"></p-radioButton>
+        </div>
+      </div>
+  <hr />
+
+  <h6 class="has-danger" *ngIf="prazos?.length == 0">Nenhum prazo encontrado</h6>
+
+
+  <div class="tabela" *ngIf="prazos?.length > 0">
+    <p-table [value]="prazos" [responsive]="true">
+      <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th class="col-cliente">Cliente</th>
+              <th class="col-os">O.S. Nº</th>
+              <th class="col-desc" >Descrição do prazo</th>
+              <th class="col-dtvenc center">Data Vencimento</th>
+              <th class="col-dtalerta center">Data Alerta</th>
+              <th class="col-op center">Opções</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-p>
+
+        <!-- row normal -->
+          <tr *ngIf='!p.edit'  [class.em-alerta]="verificarAlerta(p) && !p.cumprido"
+             [class.vencido]="verificarVencido(p)  && !p.cumprido"
+             [class.cumprido]="p.cumprido"  >
+             <td> {{ p?.os?.cliente?.nome }}</td>
+             <td>{{ p?.os?.numOs }}/{{ p?.os?.anoOs }} </td>
+            <td>{{p.descricao}}</td>
+            <td class="center">{{ p.dataVencimento | date: 'dd/MM/yyyy' }}</td>
+            <td class="center">{{ p?.dataAlerta | date: 'dd/MM/yyyy' }}</td>
+            <td class="center">
+              <button *ngIf="!p.cumprido"
+                  type="button" class="btn btn-success btn-sm btn-table"  (click)="prazoCumprido(p)"
+                  pTooltip="Definir como prazo cumprido" tooltipPosition="left" id="btn-prazo-cumprido">
+                  <i class="fa fa-handshake-o" aria-hidden="true"></i>
+              </button>
+              <button *ngIf="p.cumprido"
+                  type="button" class="btn btn-secondary btn-sm btn-table"  (click)="retornarPrazo(p)"
+                  pTooltip="Reabilitar prazo" tooltipPosition="left" id="btn-prazo-retornar">
+                  <i class="fa fa-window-restore" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="btn btn-warning btn-sm btn-table"  (click)="alterar(p)"
+                pTooltip="Edita este prazo" tooltipPosition="left" id="btn-edit-os">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+              <button type="button" (click)="confirmaExclusao(p)" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_PRAZO_EXCLUI'])"
+                   class="btn btn-danger btn-sm btn-table" pTooltip="Exclui este prazo" tooltipPosition="left" id="btn-exclui-os">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+              <a href="javascript:;" [routerLink]="['/ordem-servico/oslist']" [queryParams]="{idos: p?.os?.id}">
+                <button type="button" class="btn btn-sm btn-primary"  pTooltip="Ir para O.S. deste prazo" tooltipPosition="left">
+                  <i class="fa fa-external-link" aria-hidden="true"></i>
+                </button>
+              </a>
+            </td>
+          </tr><!-- fim row normal -->
+
+          <!-- row para edição -->
+          <tr *ngIf='p.edit' class="bk-edit-row">
+            <td> {{ p.os.cliente.nome }}</td>
+            <td>{{ p.os.numOs }}/{{ p.os.anoOs }} </td>
+            <td>
+              <input type="text" class="form-control form-control-sm" placeholder="Entre com a descrição"
+                id="descricao" [(ngModel)]="p.descricao" />
+            </td>
+            <td class="center">
+              <input type="date" [(ngModel)]="p.dataVencimento"  name="dtvenc" dateFormat="dd/mm/yy"
+                class="form-control form-control-sm"/>
+            </td>
+            <td class="center">
+             <div class="form-inline">
+                <p-checkbox [(ngModel)]="p.alerta" binary="true" name="ativaAlerta" pTooltip="Habilita Alerta" tooltipPosition="left"
+                 id="ck-alerta" ></p-checkbox>
+                <input type="date" [(ngModel)]="p.dataAlerta"  name="dtal" dateFormat="dd/mm/yy"
+                  class="form-control form-control-sm" [disabled]="!p.alerta"/>
+              </div>
+            </td>
+            <td class="center">
+              <button type="button" class="btn btn-warning btn-sm btn-table"  (click)="cancelarAlteracao(p)"
+                pTooltip="Cancela edição deste prazo" tooltipPosition="left">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </button>
+              <button type="button" (click)="salvarAlteracao(p)"
+                   class="btn btn-success btn-sm btn-table" pTooltip="Salva alteração deste prazo" tooltipPosition="left">
+                   <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr><!-- fim row edição -->
+      </ng-template>
+  </p-table>
+  </div>
+  <div class="paginador" *ngIf="totalRegistro > ROWS_POR_PAGINA_INICIAL">
+    <p-paginator [rows]="size" [totalRecords]="totalRegistro" name="page"
+      (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60]">
+    </p-paginator>
+  </div>
+
+
+
+ <!-- fecha container -->
+</div>
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

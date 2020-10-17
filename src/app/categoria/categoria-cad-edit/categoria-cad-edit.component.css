@@ -1,0 +1,22 @@
+
+#radio-receita {
+  margin-right: 20px;
+}
+.top20 {
+  margin-top: 20px;
+}
+#lb-count {
+  font-size: 12px;
+}
+#btn-voltar {
+  margin-left: 20px;
+}
+
+.cor-novo {
+  background-color: rgb(203, 222, 247);
+  padding: 25px;
+}
+.cor-edit {
+  background-color: rgb(243, 236, 176);
+  padding: 25px;
+}

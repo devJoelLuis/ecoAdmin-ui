@@ -1,0 +1,379 @@
+
+.container-ordem-servico {
+  /* background-color: rgb(209, 230, 205); */
+  width: 100%;
+}
+#titulo {
+  font-weight: 200;
+}
+
+#lbDataAlerta {
+  margin-left: 10px;
+}
+#btnCadTecnico {
+  margin-left: 15px;
+}
+#btnCadStatus {
+  margin-left: 15px;
+}
+
+#semOrdemS {
+  color:red;
+}
+
+#numOss {
+  width: 120px;
+
+}
+
+#lbAnoOs {
+   margin-left: 87px;
+}
+
+#anoOss {
+  width: 80px;
+
+  }
+
+.top10 {
+  margin-top: 10px;
+
+}
+
+#htecnica {
+  margin-right: 20px;
+}
+#btnSalvar {
+  width: 120px;
+}
+
+#btnCancelar {
+  margin-left: 10px;
+  width: 120px;
+}
+
+.colVenc {
+  width: 120px;
+}
+
+.colValor {
+  width: 100px;
+}
+.colfp {
+  width: 230px;
+}
+.col-pendenciasv {
+  width: 120px;
+}
+.colOp {
+  width: 80px;
+  text-align: center;
+}
+.colDesc {
+  width: 270px;
+}
+#editar {
+  margin-left: 10px;
+}
+#iconDefPago {
+  color: green;
+}
+#iconDefDevedor {
+  color: darkslateblue;
+}
+#LinhaOpc {
+  text-align: center;
+}
+#iconExcluir {
+  color: red;
+  margin-left: 10px;
+}
+
+
+.container  button {
+  width: 120px;
+}
+
+.top10 {
+  margin-top: 10px;
+}
+
+#btnSaveServico {
+  margin-left: 5px;
+}
+
+#btnCancelaServico {
+  margin-left: 13px;
+}
+
+
+
+.card-body {
+  overflow: auto;
+  overflow-y: hidden;
+}
+
+.spanColapse {
+  color: rgba(34, 33, 33, 0.89);
+  font-weight: 600;
+}
+
+.pipeColapse {
+  color: rgb(161, 13, 13)
+}
+
+.spanColapse {
+  margin-left: 20px;
+}
+
+.btnColapse {
+  width: 100%;
+  text-align: left;
+}
+
+.spanColapseOs{
+  margin-left: 5px;
+  padding: 3px;
+}
+
+.formAddServico {
+ width: 100%;
+}
+
+
+.formAddServico > .container {
+ /*  background-color: rgb(209, 230, 205); */
+  border-radius: 5px;
+}
+.devedorVencido > td {
+  background-color: rgb(253, 82, 82);
+}
+.devedor > td {
+  background-color: rgb(243, 227, 174);
+}
+.pago > td {
+  background-color: rgb(176, 245, 167);
+}
+
+.formAddOs {
+  width: 100%;
+}
+
+.formAddOs > .container {
+  padding: 15px;
+  background-color: rgb(209, 230, 205);
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+#npago {
+  background-color: rgb(247, 126, 126);
+  padding: 3px;
+  border-radius: 3px;
+}
+#vencido {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: red;
+}
+#naoVencido {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: rgb(143, 216, 143);
+}
+#pago {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: rgb(143, 216, 143);
+}
+#btnVincular {
+  width: 40px;
+}
+#sem-tecnico {
+  color: red;
+}
+.center {
+  text-align: center;
+}
+.col-btn-vincular {
+  width: 60px;
+}
+
+.borda-tecnicos {
+  border: solid rgb(184, 183, 183) 1px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.form-data-pagamento {
+  position: fixed;
+  width: 100%;
+   height: 100%;
+  background-color: rgba(15, 15, 15, 0.788);
+  left: 0;
+  padding: 0;
+  bottom: 0;
+  margin: 0;
+  z-index: 999;
+}
+
+.form-data-pagamento > .corpo {
+  width: 380px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: rgb(209, 230, 205);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.tabela {
+  width: 100%;
+  overflow: auto;
+}
+.texto-right {
+  text-align: right;
+}
+#btnFecharDefinirDataPagamento {
+  width: 50px;
+}
+#btn-tarefa {
+  margin-right: 5px;
+}
+.col-num {
+  width: 100px;
+}
+.col-desc {
+  width: 300px;
+}
+.col-status {
+  width: 120px;
+}
+.col-valor {
+  width: 150px;
+}
+.col-del-edit {
+  width: 100px;
+}
+.col-op {
+  width: 140px;
+}
+.pendenciaf > td {
+  color: red;
+}
+#btn-edit-os {
+  margin-right: 5px;
+}
+#btn-exclui-os {
+  margin-right: 5px;
+}
+#btn-cancelar-tarefa {
+  margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1366px) {
+ * {
+    font-size: 13px;
+  }
+}
+
+
+
+
+
+@media screen and (min-width: 900px) {
+  .container-ordem-servico {
+    padding: 30px;
+  }
+
+  .formNovoServico {
+    width: 80%;
+  }
+
+  .formNovaOs {
+    width: 80%;
+  }
+
+  .btnAlterarOS {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .borda-tecnicos {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+}
+
+
+
+@media screen and (min-width: 768px) and (max-width: 899px) {
+  .container-ordem-servico {
+    padding: 10px;
+  }
+
+
+  .formNovoServico {
+    width: 96%;
+  }
+
+  .formNovaOs {
+    width: 96%;
+  }
+
+  .btnAlterarOS {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .borda-tecnicos {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+
+}
+
+@media screen and (max-width: 767px) {
+
+  .container-ordem-servico {
+    padding: 10px;
+  }
+
+  .formNovoServico {
+    width: 98%;
+  }
+
+  .formNovaOs {
+    width: 98%;
+  }
+
+  .btnAlterarOS {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  #iconExcluir {
+    margin-left: 30px;
+  }
+
+  #editar {
+    margin-left: 30px;
+  }
+
+}

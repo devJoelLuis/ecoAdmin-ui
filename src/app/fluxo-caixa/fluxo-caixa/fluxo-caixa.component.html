@@ -1,0 +1,200 @@
+
+
+<div class="alturaMinima bg-color">
+
+  <div class="painel center">
+     <h4 id="titulo">Fluxo de caixa</h4>
+  </div>
+
+  <div class="painel">
+    <div class="row">
+      <div class="col-12 col-md-auto">
+        <div><label>Inicio:</label></div>
+        <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+        [(ngModel)]="dtini" [locale]="br.br" dateFormat="dd/mm/yy"
+        [showIcon]="true" name="dtini" id="dtini"  ></p-calendar>
+    </div>
+    <div class="col-12 col-md-auto">
+        <div><label>Fim: </label></div>
+        <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+        [(ngModel)]="dtfim" [locale]="br.br" dateFormat="dd/mm/yy"
+        [showIcon]="true" name="dtfim" id="dtentrega" ></p-calendar>
+      </div>
+      <div class="col-12 col-md-auto">
+         <button type="button" class="btn btn-sm btn-primary" id="consultar" (click)="getFluxoCaixa()">
+          <i class="fa fa-search" aria-hidden="true"></i>
+            Consultar
+         </button>
+      </div>
+    </div>
+  </div>
+
+
+ <p-tabView> 
+
+  <p-tabPanel header="Despesas e Recebimentos por categoria" >
+      <div class="painel" *ngFor="let fxb of fluxo?.fluxosSub">
+        <div class="row bottom15">
+        
+          
+            <div class="col-12 col-md-auto">
+              <span [ngClass]="{'span-categoria': fxb?.saldo > 0, 
+                'span-categoria-negativo':  fxb?.saldo < 0}"> 
+                CATEGORIA: {{ fxb?.categoria }}, SALDO: R${{ fxb?.saldo | number: '1.2-2' }}
+              </span>
+            </div>
+        
+        </div>
+
+        <!-- table recebimentos -->
+        <div class="tabela bottom15">
+          <p-table [value]="fxb?.recebimentos" class="table-recebimento" *ngIf="fxb?.recebimentos.length > 0">
+          <ng-template pTemplate="caption">
+              <span>RECEBIMENTOS de {{ dtiniConsultado | date: 'dd/MM/yyyy' }} à {{ dtfimConsultado | date: 'dd/MM/yyyy' }}</span>
+          </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                  <th style="width: 92px;" >Data</th>
+                  <th style="width: 250px;">O.S.</th>
+                  <th style="width: 200px;">Cliente</th>
+                  <th style="width: 200px;">Descrição</th>
+                  <th style="width: 150px;">Forma Pagamento</th>
+                  <th style="width: 120px;">Valor</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rec>
+              <tr>
+                  <td>{{rec?.data}}</td>
+                  <td>{{rec?.lancamento?.ordemServico?.numOs }}/{{rec?.lancamento?.ordemServico?.anoOs }} {{rec?.lancamento?.ordemServico?.local }}</td>
+                  <td>{{ rec?.lancamento?.ordemServico?.cliente?.nomeFantasia }}</td>
+                  <td>{{ rec?.lancamento?.descricao }}</td>
+                  <td>{{rec?.formaPagamento }}</td>
+                  <td>R$ {{rec?.valor | number: '1.2-2' }}</td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="totalRec">
+                TOTAL RECEBIMENTO: R$ {{ fxb?.totalRecebimento | number: '1.2-2' }}
+            </div>
+        </ng-template>
+          </p-table>
+        </div><!-- fim table recebimentos -->
+
+        <!-- table taxas 
+        <div class="tabela bottom15">
+          <p-table [value]="fxb?.lancamentosTaxa" class="table-taxas" *ngIf="fxb?.lancamentosTaxa.length > 0">
+          <ng-template pTemplate="caption">
+              <span>TAXAS de {{ dtiniConsultado | date: 'dd/MM/yyyy' }} à {{ dtfimConsultado | date: 'dd/MM/yyyy' }}</span>
+          </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                  <th style="width: 92px;">Data</th>
+                  <th style="width: 200px;">Cliente</th>
+                  <th style="width: 80px;">O.S Nº</th>
+                  <th style="width: 200px;">O.S</th>
+                  <th style="width: 120px;">Valor</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-lanc>
+              <tr>
+                  <td>{{lanc?.dataLancamento}}</td>
+                  <td>{{lanc?.ordemServico?.cliente?.nomeFantasia}}</td>
+                  <td>{{lanc?.ordemServico?.numOs}}/{{lanc?.ordemServico?.anoOs}}</td>
+                  <td>{{lanc?.ordemServico?.local}}</td>
+                  <td>R$ {{lanc?.total | number: '1.2-2' }}</td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="totalLanc">
+                TOTAL TAXAS: R$ {{ fxb?.totalTaxa | number: '1.2-2' }}
+            </div>
+           </ng-template>
+          </p-table>
+        </div> fim table taxas -->
+
+         <!-- table despesas -->
+         <div class="tabela">
+          <p-table [value]="fxb?.despesas" class="table-taxas" *ngIf="fxb?.despesas.length > 0">
+          <ng-template pTemplate="caption">
+              <span>DESPESAS de {{ dtiniConsultado | date: 'dd/MM/yyyy' }} à {{ dtfimConsultado | date: 'dd/MM/yyyy' }}</span>
+          </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                  <th style="width: 92px;">Data</th>
+                  <th style="width: 200px;">Descrição</th>
+                  <th style="width: 200px;">Cliente</th>
+                  <th style="width: 80px;">O.S Nº</th>
+                  <th style="width: 200px;">O.S</th>
+                  <th style="width: 120px;">Valor</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-desp>
+              <tr>
+                  <td>{{desp?.data}}</td>
+                  <td>{{desp?.descricao }}</td>
+                  <td>{{desp?.os?.cliente?.nomeFantasia}}</td>
+                  <td><span *ngIf="desp?.os">{{desp?.os?.numOs}}/{{desp?.os?.anoOs}}</span></td>
+                  <td>{{desp?.os?.local}}</td>
+                  <td>R$ {{desp?.valor | number: '1.2-2' }}</td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="totalLanc">
+                TOTAL DESPESAS: R$ {{ fxb?.totalDespesa | number: '1.2-2' }}
+            </div>
+           </ng-template>
+          </p-table>
+        </div><!-- fim table despesas-->
+
+      
+      </div>
+  </p-tabPanel> 
+
+ 
+
+<p-tabPanel header="Lançamentos em Aberto" >
+  <div class="painel" *ngIf="fluxo?.lancamentos.length > 0">
+    <div class="tabela">
+      <p-table [value]="fluxo?.lancamentos" class="table-taxas" >
+        <ng-template pTemplate="caption">
+           <span>LANÇAMENTOS de {{ dtiniConsultado | date: 'dd/MM/yyyy' }} à {{ dtfimConsultado | date: 'dd/MM/yyyy' }}</span>
+       </ng-template>
+         <ng-template pTemplate="header">
+           <tr>
+               <th style="width: 100px;">Data</th>
+               <th style="width: 200px;">Cliente</th>
+               <th style="width: 80px;">O.S Nº</th>
+               <th style="width: 200px;">O.S</th>
+               <th style="width: 120px;">Valor</th>
+           </tr>
+       </ng-template>
+       <ng-template pTemplate="body" let-lanc>
+           <tr>
+               <td style="width: 100px;">{{lanc?.dataLancamento}}</td>
+               <td>{{lanc?.ordemServico?.cliente?.nomeFantasia}}</td>
+               <td>{{lanc?.ordemServico?.numOs}}/{{lanc?.ordemServico?.anoOs}}</td>
+               <td>{{lanc?.ordemServico?.local}}</td>
+               <td>R$ {{lanc?.total | number: '1.2-2' }}</td>
+           </tr>
+       </ng-template>
+       <ng-template pTemplate="summary">
+        <div class="totalLanc">
+            TOTAL LANCAMENTOS: R$ {{ fluxo?.totalLancamento | number: '1.2-2' }}
+        </div>
+       </ng-template>
+       </p-table>
+    </div>
+  </div>
+</p-tabPanel> 
+
+</p-tabView>  
+   
+<!-- fecha container -->
+</div>
+
+
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

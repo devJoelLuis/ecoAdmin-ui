@@ -1,0 +1,174 @@
+
+<div class="container alturaMinima bk-color">
+
+
+  <div class="row">
+    <div class="col-12 col-md-auto top5">
+      <label>O.S. Nº:</label>
+      <span class="span-os"> {{ os.numOs }}/{{ os.anoOs }} </span>
+    </div>
+    <div class="col-12 col-md-auto top5">
+      <label>O.S. Descrição:</label>
+      <span class="span-os">{{ os.local }} </span>
+    </div>
+    <div class="col-12 col-md-auto top5">
+      <label>O.S. Cliente:</label>
+      <span class="span-os">{{ os?.cliente?.nome }} </span>
+    </div>
+  </div>
+
+  <hr />
+    <button type="button" class="btn btn-sm btn-primary" (click)="novoPrazo()" [disabled]="modoEdit">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Cadastrar Prazo
+    </button>
+  <hr />
+
+  <div class="row" *ngIf="os?.prazos?.length == 0">
+    <div class="col-auto">
+      <h6 class="has-danger">Nenhum prazo cadastrado</h6>
+    </div>
+  </div>
+
+  <div class="tabela" *ngIf="os?.prazos?.length > 0">
+    <p-table [value]="os?.prazos" [responsive]="true">
+      <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th class="col-desc" >Descrição</th>
+              <th class="col-dtvenc center">Data Vencimento</th>
+              <th class="col-dtalerta center">Data Alerta</th>
+              <th class="col-op center">Opções</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-p>
+
+        <!-- row normal -->
+        <tr *ngIf='!p.edit'  [class.em-alerta]="verificarAlerta(p) && !p.cumprido"
+        [class.vencido]="verificarVencido(p)  && !p.cumprido"
+        [class.cumprido]="p.cumprido"  >
+            <td>{{p.descricao}}</td>
+            <td class="center">{{ p.dataVencimento | date: 'dd/MM/yyyy' }}</td>
+            <td class="center">{{ p?.dataAlerta | date: 'dd/MM/yyyy' }}</td>
+            <td class="center">
+              <button *ngIf="!p.cumprido"
+                type="button" class="btn btn-success btn-sm btn-table"  (click)="prazoCumprido(p)"
+                pTooltip="Definir como prazo cumprido" tooltipPosition="left" id="btn-prazo-cumprido">
+                <i class="fa fa-handshake-o" aria-hidden="true"></i>
+             </button>
+             <button *ngIf="p.cumprido"
+                type="button" class="btn btn-secondary btn-sm btn-table"  (click)="retornarPrazo(p)"
+                pTooltip="Reabilitar prazo" tooltipPosition="left" id="btn-prazo-retornar">
+                <i class="fa fa-window-restore" aria-hidden="true"></i>
+             </button>
+              <button type="button" class="btn btn-warning btn-sm btn-table"  (click)="alterar(p)"
+                pTooltip="Edita este prazo" tooltipPosition="left" id="btn-edit-os">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+              <button type="button" (click)="confirmaExclusao(p)" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_PRAZO_EXCLUI'])"
+                   class="btn btn-danger btn-sm btn-table" pTooltip="Exclui este prazo" tooltipPosition="left" id="btn-exclui-os">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr><!-- fim row normal -->
+
+          <!-- row para edição -->
+          <tr *ngIf='p.edit' class="bk-edit-row">
+            <td>
+              <input type="text" class="form-control form-control-sm" placeholder="Entre com a descrição"
+                id="descricao" [(ngModel)]="p.descricao" />
+            </td>
+            <td class="center">
+              <input type="date" [(ngModel)]="p.dataVencimento"  name="dtvenc" dateFormat="dd/mm/yy"
+                class="form-control form-control-sm"/>
+            </td>
+            <td class="center">
+             <div class="form-inline">
+                <p-checkbox [(ngModel)]="p.alerta" binary="true" name="ativaAlerta" pTooltip="Habilita Alerta" tooltipPosition="left"
+                 id="ck-alerta" ></p-checkbox>
+                <input type="date" [(ngModel)]="p.dataAlerta"  name="dtal" dateFormat="dd/mm/yy"
+                  class="form-control form-control-sm" [disabled]="!p.alerta"/>
+              </div>
+            </td>
+            <td class="center">
+              <button type="button" class="btn btn-warning btn-sm btn-table"  (click)="cancelarAlteracao(p)"
+                pTooltip="Cancela edição deste prazo" tooltipPosition="left">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </button>
+              <button type="button" (click)="salvarAlteracao(p)"
+                   class="btn btn-success btn-sm btn-table" pTooltip="Salva alteração deste prazo" tooltipPosition="left">
+                   <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr><!-- fim row edição -->
+      </ng-template>
+  </p-table>
+  </div>
+
+
+  <hr />
+
+  <button type="button" class="btn btn-sm btn-primary" [disabled]="modoEdit" (click)="goback()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Voltar
+  </button>
+
+
+
+<!-- dialog cadastra novo prazo -->
+  <p-dialog header="Novo Prazo" [(visible)]="dialogOn" [modal]="true" [style]="{width: '60vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false" [closable]="false">
+
+     <div class="row">
+       <div class="col-12">
+         <label for="descricao">Descrição *:</label>
+         <input type="text" class="form-control form-control-sm" placeholder="Entre com a descrição"
+                id="descricao" [(ngModel)]="prazo.descricao" />
+       </div>
+     </div>
+
+     <div class="row">
+       <div class="col-12 col-md-auto top15">
+         <div><label>Data Vencimento *:</label></div>
+         <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+         [(ngModel)]="prazo.dataVencimento"  name="dtvenc"
+         [showIcon]="true" dateFormat="dd/mm/yy" [locale]="br.br"></p-calendar>
+       </div>
+       <div class="col-12 col-md-auto top15">
+         <div>
+          <p-checkbox [(ngModel)]="prazo.alerta" binary="true" name="ativaAlerta" ></p-checkbox>
+          <label id="lbDataAlerta">Data Alerta:</label>
+         </div>
+        <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+        [(ngModel)]="prazo.dataAlerta"  name="dtalert" [disabled]="!prazo.alerta"
+        [showIcon]="true" dateFormat="dd/mm/yy" [locale]="br.br"></p-calendar>
+       </div>
+     </div>
+
+
+    <hr/>
+    <button type="button" class="btn btn-sm btn-warning btn-form" (click)="cancelarDialog()">
+      <i class="fa fa-ban" aria-hidden="true"></i>
+      Cancelar
+    </button>
+
+    <button type="button" class="btn btn-sm btn-success btn-form" (click)="salvarPrazo()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      Salvar
+    </button>
+
+  <!--fecha dialog cadastrar prazo  -->
+  </p-dialog>
+
+
+
+<!-- fecha container -->
+</div>
+
+
+
+
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

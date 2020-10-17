@@ -1,0 +1,217 @@
+<div [class]="classeContainer">
+
+    <p-button  icon="fa fa-arrow-left" (click)="voltarPagina()" label="Voltar" id="btnVoltar" ></p-button>
+  <hr />
+   <div class="row">
+     <div class="titulo">
+        <h3>{{titulo}}</h3>
+    </div>
+   </div>
+
+<form autocomplete="off" #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+  <hr />
+  <div class="row">
+      <div class="col-12">
+          <h5>Dados pessoais do cliente:</h5>
+      </div>
+    </div>
+
+  <div class="row top10" *ngIf="edicao">
+      <div class="col-12 col-md-6">
+         Cliente id: {{ cliente.id }}
+      </div>
+      <div class="col-12 col-md-6">
+         Data do cadastro:  {{ dataCadastro | date: "dd-MM-yyyy HH:mm:ss" }}
+        </div>
+  </div>
+
+
+
+   <div class="row top10">
+     <div class="col-12 col-md-6">
+      <div class="form-group" [class.has-danger]="nome.invalid && nome.touched">
+        <label  for="nome" >*Nome:</label>
+        <input type="text" maxlength="60" [(ngModel)]="cliente.nome"
+        class="form-control form-control-sm  text-uppercase" name="nome" #nome="ngModel"
+        required minlength="3" placeholder="Nome completo">
+        <!--começo da mensagens de validação-->
+        <div class="form-control-feedback"
+        *ngIf="nome.hasError('required') && nome.touched">
+           O nome completo é obrigatório</div>
+         <div class="form-control-feedback"
+          *ngIf="nome.hasError('minlength') && nome.dirty">
+           Mínimo de 3 caracteres</div>
+           <!--fim das mensagens de validação do input nome -->
+      </div>
+     </div>
+     <div class="col-12 col-md-6">
+      <div class="form-group" [class.has-danger]="nomef.invalid && nomef.touched">
+        <label  for="nomef" >*Nome fantasia:</label>
+        <input type="text" maxlength="60" [(ngModel)]="cliente.nomeFantasia"
+        class="form-control form-control-sm text-uppercase" name="nomef" #nomef="ngModel"
+        required minlength="3" placeholder="Nome fantasia" >
+        <!--começo da mensagens de validação-->
+        <div class="form-control-feedback"
+        *ngIf="nomef.hasError('required') && nomef.touched">
+           O nome fantasia é obrigatório</div>
+         <div class="form-control-feedback"
+          *ngIf="nomef.hasError('minlength') && nomef.dirty">
+           Mínimo de 3 caracteres</div>
+           <!--fim das mensagens de validação do input nome fantasia -->
+      </div>
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="col-12 col-md-6">
+
+            <label  for="cnpj" >CNPJ/CPF:</label>
+            <input type="text" maxlength="45" [(ngModel)]="cliente.cnpj"
+            class="form-control form-control-sm w-75" name="cnpj" #cnpj="ngModel"
+            required minlength="6" placeholder="CNPJ / CPF">
+
+    </div>
+    <div class="col-12 col-md-6">
+
+        <label  for="rg" >RG:</label>
+            <input type="text" maxlength="45" [(ngModel)]="cliente.rg"
+            class="form-control form-control-sm  w-75" name="rg" #rg="ngModel"
+            placeholder="RG">
+
+   </div>
+  </div>
+
+  <div class="row top10">
+    <div class="col-12 col-md-6">
+
+        <label  for="tel" >Telefone:</label>
+        <input type="text" maxlength="45" [(ngModel)]="cliente.telefone"
+        class="form-control form-control-sm  w-75" name="tel" #telefone="ngModel"
+        placeholder="Telefone">
+
+    </div>
+    <div class="col-12 col-md-6">
+
+        <label  for="celular" >Celular:</label>
+        <input type="text" maxlength="45" [(ngModel)]="cliente.celular"
+        class="form-control form-control-sm  w-75" name="celular" #celular="ngModel"
+        placeholder="Celular">
+
+   </div>
+  </div>
+
+  <div class="row top10">
+    <div class="col-12 col-md-6">
+        <div class="form-group" [class.has-danger]="emailv.invalid && emailv.touched">
+        <label  for="email" >E-mail:</label>
+        <input type="email" maxlength="45" [(ngModel)]="cliente.email"
+        class="form-control form-control-sm  w-75 text-lowercase" name="input" #emailv="ngModel"
+        placeholder="E-mail" required>
+        <div class="form-control-feedback"
+          *ngIf="emailv.invalid && emailv.touched">
+           Email inválido</div>
+      </div>
+    </div>
+  </div>
+
+
+
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        <h5>Dados do endereço:</h5>
+    </div>
+  </div>
+
+  <div class="row top10">
+      <div class="col-12 col-md-7">
+          <label  for="rua" >Rua:</label>
+          <input type="text" maxlength="60" [(ngModel)]="cliente.rua"
+          class="form-control form-control-sm  text-uppercase" name="rua" #rua="ngModel"
+          placeholder="Rua">
+      </div>
+      <div class="col-12 col-md-3">
+          <label  for="num" >Número:</label>
+          <input type="text" maxlength="45" [(ngModel)]="cliente.numero"
+          class="form-control form-control-sm  w-75" name="num" #numero="ngModel"
+          placeholder="Número">
+     </div>
+    </div>
+
+
+    <div class="row top10">
+        <div class="col-12 col-md-7">
+            <label  for="bairro" >Bairro:</label>
+            <input type="text" maxlength="45" [(ngModel)]="cliente.bairro"
+            class="form-control form-control-sm  w-75 text-uppercase" name="bairro" #bairro="ngModel"
+            placeholder="Bairro">
+        </div>
+        <div class="col-12 col-md-5">
+            <label  for="cep" >CEP:</label>
+            <input type="text" maxlength="45" [(ngModel)]="cliente.cep"
+            class="form-control form-control-sm  w-75" name="cep" #cep="ngModel"
+            placeholder="Número">
+       </div>
+      </div>
+
+      <div class="row top10">
+          <div class="col-12 col-md-7">
+              <label  for="cidade" >Cidade:</label>
+              <input type="text" maxlength="45" [(ngModel)]="cliente.cidade"
+              class="form-control form-control-sm  w-75 text-uppercase" name="cidade" #cidde="ngModel"
+              placeholder="Cidade">
+          </div>
+          <div class="col-12 col-md-5">
+            <label>Selecione um status para o cliente:</label>
+            <div *ngIf="statuslist?.length == 0">
+                <h6 id="semStatuscad">Não existem status cadastrado no sistema</h6>
+            </div>
+            <div *ngIf="statuslist?.length > 0">
+                <p-dropdown [options]="statuslist" [(ngModel)]="statuCli" name="dpdown"
+                placeholder="Selecione um status" optionLabel="statusCli" [showClear]="true"></p-dropdown>
+                <button pButton type="button" icon="fa fa-plus" id="btnAddStatus" (click)="addStatusCliente()"
+                pTooltip="Cadastrar novo status de cliente"></button>
+            </div>
+         </div>
+
+     </div>
+
+     <hr />
+
+        <div class="row top10">
+          <div class="col-12">
+            <label  for="obs" >Observações:</label>
+            <div>
+            <textarea name="obs" rows="5" cols="46" pInputTextarea maxlength="254" [(ngModel)]="cliente.obs"></textarea>
+          </div>
+          <label >caracteres restantes: {{ 254-cliente.obs?.length }}</label>
+          </div>
+        </div>
+
+        <hr />
+          <div class="row">
+            <div class="col-12" id="barraBtn">
+                <button pButton type="button" class="btnOp" (click)="goback()"
+                icon="fa fa-arrow-left" iconPos="left" label="Voltar"></button>
+
+                <button pButton type="button" class="btnOp ui-button-warning"
+                icon="fa fa-ban" iconPos="left" label="Limpar" (click)="limparForm(f)"></button>
+
+                <button pButton type="submit" class="btnOp ui-button-success" [disabled]="cadStatusMod"
+                icon="fa fa-floppy-o" iconPos="left" label="Salvar"></button>
+              </div>
+          </div>
+        <hr />
+
+</form>
+
+
+</div>
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>
+
+

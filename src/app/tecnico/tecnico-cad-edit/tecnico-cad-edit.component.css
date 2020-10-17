@@ -1,0 +1,46 @@
+
+
+.container-tecnico-cad-edit {
+  padding: 20px;
+  margin: 0 auto;
+}
+
+
+#btnNovoTecnico {
+  margin-right: 10px;
+}
+#btn-salvar {
+  width: 150px;
+}
+#btn-cancelar {
+  width: 150px;
+  margin-left: 15px;
+}
+.top15 {
+  margin-top:15px;
+}
+
+
+
+@media screen and (min-width: 900px) {
+  .container-tecnico-cad-edit {
+    width: 88%;
+  }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 899px) {
+  .container-tecnico-cad-edit {
+    width: 94%;
+  }
+
+}
+
+@media screen and (max-width: 767px) {
+
+  .container-tecnico-cad-edit {
+    width: 98%;
+  }
+
+
+}

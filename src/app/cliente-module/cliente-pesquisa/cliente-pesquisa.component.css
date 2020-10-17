@@ -1,0 +1,111 @@
+
+#titulo {
+  font-weight: 200;
+}
+
+#acao {
+  text-align: center;
+}
+
+
+
+.btnNovo {
+  padding: 0px 0px 10px 0px;
+}
+
+
+
+.corbk {
+  background-color: rgb(219, 233, 220);
+}
+
+.titulo {
+  padding: 20px;
+}
+.colnome {
+  width: 250px;
+}
+.colnomef {
+  width: 250px;
+}
+.coltel {
+  width: 150px;
+}
+.colcel {
+  width: 150px;
+}
+.colStatus{
+  width: 180px;
+}
+.acao {
+  width: 120px;
+  text-align: center;
+}
+.rgh10 {
+  margin-right: 10px;
+}
+
+#iconExcluir {
+  color:red;
+}
+#check-cnfantasia {
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 900px) {
+
+
+
+      #consulta {
+        display: inline;
+        max-width: 450px;
+        margin-right: 5px;
+      }
+
+      .container-custom {
+        width: 88%;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+
+
+  }
+
+
+  @media screen and (max-width: 899px) {
+
+    #btnConsultar {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .container-custom {
+      width: 96%;
+      margin: 0 auto;
+      padding: 6px;
+    }
+
+    #consulta {
+      width: 100%;
+    }
+
+ }
+
+
+
+ @media screen and (max-width: 640px) {
+
+  .icon {
+    text-decoration: none;
+     margin-right: 30px;
+  }
+}
+
+
+
+
+
+
+
+

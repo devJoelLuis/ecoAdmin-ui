@@ -1,0 +1,90 @@
+.painel {
+    margin: 15px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.575);
+    background: #fff;
+    border-radius: 5px;
+  }
+  #titulo {
+      font-weight: 300;
+  }
+  .tabela {
+      width: 100%;
+      max-height: 800px;
+      overflow: auto;
+  }
+  .span-categoria {
+      color: blue;
+      font-size: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+  }
+  .span-categoria-negativo {
+      color: red;
+  }
+  .bottom15 {
+      margin-bottom: 15px;
+  }
+  .categoria-nome {
+      
+      color: rgb(82, 39, 8);
+      font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+
+  }
+  #consultar {
+      margin-top: 33px;
+  }
+  .table-taxas span {
+      color: red;
+  }
+  .table-recebimento span {
+      color: green;
+  }
+  .table-taxas th {
+    color: red;
+}
+.table-recebimento th {
+    color: green;
+}
+.table-taxas td {
+    color: red;
+}
+.table-recebimento td {
+    color: green;
+}
+.totalRec {
+    width: 100%;
+    text-align: right;
+    color: green;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.totalLanc {
+    width: 100%;
+    text-align: right;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+
+
+
+  @media screen and (max-width: 768px) {
+    #consultar {
+        margin-top: 20px;
+    }
+    .painel {
+        margin: 8px;
+        padding: 10px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.575);
+        border-radius: 5px;
+      }
+  
+  }

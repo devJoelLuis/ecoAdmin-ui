@@ -1,0 +1,139 @@
+<div class="container-licenca-filtro alturaMinima">
+
+   <div class="row">
+     <div class="col-12">
+      <div class="col-12 col-md-2">
+        <button pButton type="button" label="Voltar" (click)="goBack()" icon="fa fa-arrow-left"></button>
+      </div>
+     </div>
+   </div>
+
+   <div class="row">
+
+     <div class="col-12 center">
+       <h5>Filtro de Licenças</h5>
+     </div>
+   </div>
+
+   <hr />
+
+   <div class="row top15">
+      <div class="col-auto" >
+        <p-radioButton name="group1" label="Todas Licenças ativas" value="tudo" [(ngModel)]="filtro.tipo" (onFocus)="radioTudo()"></p-radioButton>
+      </div>
+      <div class="col-auto">
+        <p-radioButton name="group1" label="Licenças em Alerta" value="alerta" [(ngModel)]="filtro.tipo" (onFocus)="radioAlerta()"></p-radioButton>
+      </div>
+      <div class="col-auto">
+        <p-radioButton name="group1" label="Arquivo morto" value="morto" [(ngModel)]="filtro.tipo" (onFocus)="radioMorto()"></p-radioButton>
+      </div>
+      <div class="col-auto">
+        <p-radioButton name="group1" label="Data vencimento" value="vencimento" [(ngModel)]="filtro.tipo" (onFocus)="radioVencimento()"></p-radioButton>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-12  col-md-6" *ngIf="filtro.tipo != 'vencimento' && filtro.tipo != 'morto'">
+          <label>Número da licença ou Descrição</label>
+          <div class="form-inline">
+              <input  type="text" id="input-consultar" placeholder="Descrição ou numero "
+              (keyup)="keyupConsulta($event)"
+              class="form-control form-control-sm" name="consulta" [(ngModel)]="filtro.param">
+              <button pButton type="button" label="Consultar" (click)="page=0; consultar()" id="btn-consultar"></button>
+          </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-8" *ngIf="filtro?.tipo == 'vencimento'">
+        <h6>Vencimento:</h6>
+         <div class="dt-vencimento">
+           <label>Início</label>
+            <p-calendar  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+             [locale]="br.br" dateFormat="dd/mm/yy" [(ngModel)]="dtInicio" [showIcon]="true" ></p-calendar>
+          </div>
+          <div class="dt-vencimento">
+           <label id="dt-fim">Fim</label>
+             <p-calendar [(ngModel)]="dtFim" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+             [locale]="br.br" dateFormat="dd/mm/yy" yearRange="2000:2050"></p-calendar>
+
+              <button pButton type="button" label="Consultar" (click)="page=0; consultar()" id="btn-consultar-data"></button>
+
+          </div>
+
+      </div>
+
+    </div>
+
+    <hr />
+    <div class="row" *ngIf="licencas?.length == 0">
+      <div class="col-12 center">
+         <h6 class="text-danger">Nenhum registro encontrado</h6>
+      </div>
+    </div>
+
+    <div class="tabela-licencas" *ngIf="licencas?.length > 0">
+        <p-table [value]="licencas" [responsive]="true">
+            <ng-template pTemplate="caption">
+                Exibindo Licenças {{ licencas.length }} de {{ totalRegistro }}
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="col-numero">Número</th>
+                    <th class="col-cliente">Cliente</th>
+                    <th class="col-descricao">Descrição</th>
+                    <th class="col-vencimento center">Vencimento</th>
+                    <th class="col-alerta center">Alerta</th>
+                    <th class="col-opcao center">Opcão</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-l>
+                <tr [class.vencido]="l.dataVencimento.getTime() <= dtNow.getTime() && !l.arquivoMorto" [class.arquivoMortocss]="l.arquivoMorto" >
+                    <td>{{ l.numero }}</td>
+                    <td>{{ l.cliente.nome }}</td>
+                    <td>{{ l.assunto }}</td>
+                    <td class="center">{{ l.dataVencimento | date: 'dd/MM/yyyy' }}</td>
+                    <td class="center">
+                      <span *ngIf="l.alerta == 1">{{ l?.dataAlerta | date: 'dd/MM/yyyy' }}</span>
+                    </td>
+                    <td class="center">
+
+                      <button type="button" *ngIf="!l?.arquivoMorto" (click)="definirComoArquivoMorto(l)"
+                              class="btn btn-sm btn-secondary" pTooltip="Transformar em arquivo morto" tooltipPosition="left" id="btn-arquivo-morto">
+                              <i class="fa fa-share" aria-hidden="true"></i>
+                      </button>
+
+                      <button type="button" *ngIf="l?.arquivoMorto" (click)="reativarLicencaDoArquivoMorto(l)"
+                           class="btn btn-sm btn-success" pTooltip="Retirar do arquivo morto" tooltipPosition="left" id="btn-arquivo-morto">
+                           <i class="fa fa-reply" aria-hidden="true"></i>
+                      </button>
+
+                      <button type="button"  pTooltip="editar" tooltipPosition="left" (click)="editar(l.id)"
+                       class="btn btn-sm btn-warning" id="span-editar">
+                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                      </button>
+
+                      <button  type="button" (click)="confirmarExclusaoLicenca(l)" class="btn btn-sm btn-danger"
+                            pTooltip="Excluir Serviço" tooltipPosition="left" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_LICENCA_EXCLUI'])" >
+                          <span class="fa fa-trash-o" id="iconExcluir"></span>
+                      </button>
+
+                  </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+    <div class="paginacao" *ngIf="totalRegistro > size">
+        <p-paginator [rows]="size" [totalRecords]="totalRegistro" (onPageChange)="paginate($event)"
+        [rowsPerPageOptions]="[20,30,60]" name="paginator"></p-paginator>
+    </div>
+
+
+
+  <!-- fecha container -->
+</div>
+
+
+<div *ngIf="load" class="loadcss">
+    <img src="./../../../assets/img/load2.gif">
+  </div>

@@ -1,0 +1,45 @@
+#linkDash {
+  color:greenyellow;
+}
+#userLogado {
+ color: #fff;
+}
+
+#linkLogout > a {
+  color: #fff;
+  text-decoration: none;
+}
+#img-coami {
+  margin-right: 20px;
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+
+
+
+@media screen and (min-width: 992px) {
+  #userLogado {
+    margin-left: 10px;
+    margin-right: 30px;
+    font-weight: 200;
+  }
+
+  #linkLogout {
+    margin-right: 120px;
+
+  }
+  #hr-separador {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  #hr-separador {
+    margin-top: 50px;
+  }
+  #linkLogout {
+    margin: 20px 0 20px 0;
+  }
+}

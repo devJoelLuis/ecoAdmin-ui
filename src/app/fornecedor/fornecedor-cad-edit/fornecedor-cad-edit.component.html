@@ -1,0 +1,176 @@
+<div [class]="containerCss">
+
+
+   <h5 id="titulo">{{ titulo }}</h5>
+
+
+   <hr />
+
+   <form autocomplete="off" #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+     <div class=row>
+      <div class="col-12 col-md-6">
+      <div class="form-group" [class.has-danger]="nome.invalid && nome.touched">
+        <label for="nomef">*Nome:</label>
+        <input type="text" required if="nomef" name="nome" [(ngModel)]="fornecedor.nome"
+            class="form-control form-control-sm text-uppercase" minlength="3"
+            placeholder="Nome do fornecedor" #nome="ngModel">
+             <!--começo da mensagens de validação-->
+          <div class="form-control-feedback"
+          *ngIf="nome.hasError('required') && nome.touched">
+           O nome é obrigatório</div>
+         <div class="form-control-feedback"
+          *ngIf="nome.hasError('minlength') && nome.dirty">
+           Mínimo de 3 caracteres</div>
+           <!--fim das mensagens de validação do input nome -->
+       </div>
+      </div>
+      <div class="col-12 col-md-6">
+          <div class="form-group" [class.has-danger]="email.invalid && email.touched">
+              <label for="emailf">E-mail:</label>
+              <input type="email" if="emailf" name="email" [(ngModel)]="fornecedor.email"
+                  class="form-control form-control-sm text-lowercase"
+                  placeholder="E-mail do fornecedor" #email="ngModel">
+                   <!--começo da mensagens de validação-->
+                <div class="form-control-feedback"
+                *ngIf="email.invalid && email.touched">
+                 O email inválido</div>
+                 <!--fim das mensagens de validação do input nome -->
+             </div>
+      </div>
+     </div>
+
+     <div class="row">
+       <div class="col-12 col-md-5">
+        <div class="form-group">
+         <label>Telefones:</label>
+         <input type="text" class="form-control form-control-sm" placeholder="Telefones do fornecedor"
+            name="telefones" [(ngModel)]="fornecedor.telefone">
+          </div>
+       </div>
+       <div class="col-12 col-md-7">
+          <div class="form-group">
+          <label>Rua:</label>
+         <input type="text" class="form-control form-control-sm text-uppercase" placeholder="Rua"
+            name="rua" [(ngModel)]="fornecedor.rua">
+         </div>
+        </div>
+     </div>
+
+     <div class="row">
+        <div class="col-4 col-md-2">
+            <div class="form-group">
+          <label>Número:</label>
+          <input type="text" class="form-control form-control-sm" placeholder="número"
+             name="num" [(ngModel)]="fornecedor.numero">
+          </div>
+        </div>
+        <div class="col-8 col-md-6">
+            <div class="form-group">
+           <label>Bairro:</label>
+          <input type="text" class="form-control form-control-sm text-uppercase"  placeholder="bairro"
+             name="bairro" [(ngModel)]="fornecedor.bairro">
+            </div>
+         </div>
+         <div class="col-12 col-md-4">
+            <div class="form-group">
+            <label>Cidade:</label>
+          <input type="text" class="form-control form-control-sm text-uppercase" placeholder="cidade"
+             name="cidade" [(ngModel)]="fornecedor.cidade">
+            </div>
+         </div>
+      </div>
+
+     <div class="row">
+       <div class="col-12 col-md-3">
+         <div class="form-group">
+           <label>CEP</label>
+           <input type="text" placeholder="CEP" name="cep" [(ngModel)]="fornecedor.cep"
+              class="form-control form-control-sm">
+         </div>
+       </div>
+       <div class="col-12 col-md-7">
+         <div class="form-group">
+           <label>Observação:</label><br />
+           <textarea rows="3"  name="obs" id="obsf" [(ngModel)]="fornecedor.obs"></textarea>
+         </div>
+       </div>
+     </div>
+
+     <hr>
+
+     <div class="row">
+       <div class="col-12 col-md6">
+         <div class="form-group">
+           <label>Descrição do Status do fornecedor</label>
+           <input class="form-control form-control-sm" id="consulta" [(ngModel)]="status.descricao"
+               type="text"  placeholder="Descrição"  maxlength=200 name="descricao"/>
+         </div>
+       </div>
+       <div class="col-12 col-md-6">
+         <div class="form-group">
+           <div><label>Observação do status:</label></div>
+           <textarea row="3" maxlength="255" name="obsStatus" id="obsS" [(ngModel)]="status.obs" col="40"></textarea>
+           <div>
+             <button pButton icon="fa fa-plus-square" [disabled]="status.descricao == '' || status.descricao == undefined"
+              label="Adicionar Status" type="button"  id="btnAddStatus" (click)="adicionarStatus()" ></button>
+          </div>
+         </div>
+       </div>
+     </div>
+
+     <div class="row">
+       <div class="col-12 col-md-12">
+          <p-table [value]="fornecedor.statusFornecedor" [responsive]="true" *ngIf="fornecedor.statusFornecedor.length > 0">
+              <ng-template pTemplate="caption">
+                  Status do Fornecedor
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Observação</th>
+                  <th class="col-op">Opção</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-s >
+                  <tr>
+                      <td>{{ s.descricao }}</td>
+                      <td>{{ s.obs }}</td>
+                      <td class="col-op">
+                       <button pTooltip="Remove Status" tooltipPosition="left" (click)="removerStatus(s)"
+                          pButton icon="fa fa-minus-square"  class="ui-button-danger" type="button"></button>
+                      </td>
+                  </tr>
+              </ng-template>
+          </p-table>
+          <h5 *ngIf="fornecedor.statusFornecedor.length == 0" class="color-red">*Fornecedor sem Status definido</h5>
+       </div>
+     </div>
+
+
+     <hr />
+     <div class="row">
+        <div class="col-12" id="barraBtn">
+
+
+            <button pButton type="submit" class="btnOp ui-button-success" [disabled]="f.invalid || fornecedor.statusFornecedor.length == 0"
+                icon="fa fa-floppy-o" iconPos="left" label="Salvar">
+            <span *ngIf="f.invalid" pTooltip="Preencha todos os campos com * asteristicos" tooltipPosition="top"></span></button>
+
+
+            <button pButton type="button" class="btnOp" (click)="voltar()"
+            icon="fa fa-arrow-left" iconPos="left" label="Voltar"></button>
+
+          </div>
+      </div>
+    <hr />
+   </form>
+
+
+  <!-- fecha container -->
+</div>
+
+
+<div *ngIf="load" class="loadcss">
+    <img src="./../../../assets/img/load2.gif">
+  </div>

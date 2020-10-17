@@ -1,0 +1,114 @@
+
+
+<div class="container-consulta-licenca alturaMinima" *ngIf="semPermissao">
+
+  <div style="width: 300px; margin: 0 auto; text-align: center;">
+    <h6 class="text-danger">SEM PERMISSÃO</h6>
+ </div>
+
+</div>
+
+
+
+
+
+
+<div class="container-consulta-licenca alturaMinima" *ngIf="!semPermissao">
+
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <p-button icon="fa fa-plus" (click)="novaLicenca()"
+               label="Nova Licença"  id="btnNovaLicenca" ></p-button>
+        </div>
+      </div>
+
+      <hr />
+
+    <div class="row">
+      <div class="col-12 col-md-2 col-lg-1">
+          <h5>Filtro</h5>
+      </div>
+      <div class="col-12 col-md-4 col-lg-3">
+          <span id="span-buscardata">
+              <p-checkbox [(ngModel)]="buscarPorData" binary="true" (click)="consultarChange()" ></p-checkbox>
+              <span id="spanl-vencidos">Consultar por data de vencimento</span>
+            </span>
+      </div>
+    </div>
+
+
+    <hr />
+
+    <div class="row"  *ngIf="buscarPorData">
+
+        <div class="col-12 col-md-4 col-lg-3 top15">
+                <label>início</label><br />
+                <p-calendar [(ngModel)]="dtinicio" [locale]="br.br" dateFormat="dd/mm/yy"
+                [showIcon]="true" name="datainicio" id="calendar-ini"></p-calendar>
+        </div>
+
+        <div class="col-12  col-md-4 col-lg-3 top15" >
+            <label>fim</label><br />
+            <p-calendar [(ngModel)]="dtfim" [locale]="br.br" dateFormat="dd/mm/yy"
+            [showIcon]="true" name="datafim"  [minDate]="dtinicio" id="calendar-fim"></p-calendar>
+         </div>
+
+         <div class="col-12  col-md-4 col-lg-3 top15 btncenter">
+           <button pButton type="button" label="consultar" (click)="consultarPorData(); resetPage();"
+           icon="fa fa-search" id="btn-consultar"></button>
+         </div>
+
+
+    </div>
+
+
+    <div class="tabela" *ngIf="licencas?.length > 0">
+
+        <p-table  [value]="licencas" [responsive]="true">
+            <ng-template pTemplate="caption">
+                Lista de Licencas
+            </ng-template>
+            <ng-template pTemplate="header" >
+                <tr>
+                    <th class="colNum"  >Numero</th>
+                    <th class="colAssunto" >Assunto</th>
+                    <th class="colDtEntrega" >Data Vencimento</th>
+                    <th class="colObs">Observação</th>
+                    <th class="colOp center" >Opções</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-l>
+                <tr [class.vencido]="l?.dataVencimento.getTime() < dtNowMili">
+                    <td>{{ l.numero }}</td>
+                    <td>{{ l.assunto }}</td>
+                    <td >{{ l.dataVencimento | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ l.obs }}</td>
+                    <td class="colOp center">
+                      <button pButton type="button" tooltipPosition="left" (click)="editarLicenca(l.id)"
+                      icon="fa fa-pencil" pTooltip="Editar a Licença" id="btnEditar"
+                      class="ui-button-warning"></button>
+                      <button pButton type="button" pTooltip="Excluir a Licença" (click)="excluirLicenca(l)"
+                      [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])"
+                      icon="fa fa-trash-o" class="ui-button-danger" tooltipPosition="left"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+          <div class="center" *ngIf="totalRegistro > size">
+            <p-paginator [rows]="size" [totalRecords]="totalRegistro" (onPageChange)="paginate($event)"></p-paginator>
+          </div>
+
+
+    </div>
+
+
+  <!-- fecha container -->
+</div>
+
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>

@@ -1,0 +1,139 @@
+
+<div [class]="classeContainer" *ngIf="!modoNovacategoria">
+
+  <h4 id="titulo">{{titulo}}</h4>
+
+
+  <hr />
+  O.S.: <b>{{ os.numOs}}/{{os.anoOs}}, {{os.local}}</b>
+
+<hr />
+<div class="row">
+  <div class="col-12 form-group">
+     <label>Descrição:</label>
+     <input type="text" class="form-control form-control-sm" placeholder="Digite a descrição"
+        name="input-descricao" [(ngModel)]="lancamento.descricao" id="descricao">
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-auto form-group">
+    <div><label>Selecione a categoria:</label></div>
+    <div *ngIf="categorias?.length == 0">
+        <h6 class="text-danger">Categoria não encontrada</h6>
+    </div>
+    <div *ngIf="categorias?.length > 0" class="drop-cat">
+        <p-dropdown [options]="categorias" [(ngModel)]="categoria" name="dpdown"
+        placeholder="Selecione a categoria" optionLabel="descricao" [showClear]="true"></p-dropdown>
+    </div>
+    <button pButton type="button" icon="fa fa-plus" id="btn-nv-cat" (click)="modoCadCategoria()"
+    pTooltip="Cadastrar nova categoria"></button>
+</div>
+  <div class="col-auto form-group">
+    <div><label>Data:</label></div>
+    <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+    [(ngModel)]="lancamento.dataLancamento" [showIcon]="true" [locale]="br.br"
+           name="dtvencimento" dateFormat="dd/mm/yy"  [inputStyle]="{'width':'70%'}"></p-calendar>
+  </div>
+  <div class="col-auto form-group">
+      <label>Total:</label>
+      <input type="text" [(ngModel)]="lancamento.total" placeholder="0,00" id="valor"
+            name="valor" class="form-control form-control-sm" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+  </div>
+  <div class="col-auto form-group" *ngIf="!edicao && !taxa">
+    <label>Parcelas:</label>
+    <input type="number" max="24" min="1" class="form-control form-control-sm" [(ngModel)]="parcelas">
+  </div>
+</div>
+
+
+
+
+
+
+<div class="row top15">
+  <div class="col-12 col-md-6 txtarea form-group">
+    <div><label>Observação:</label></div>
+     <textarea class="form-control form-control-sm" maxlength="255" name="obs" [(ngModel)]="lancamento.obs"></textarea>
+     <div><label id="lb-restante">Caracteres restantes {{ 255 - lancamento?.obs?.length }}</label></div>
+  </div>
+</div>
+
+<div class="row top15">
+  <div class="col-auto">
+    <input type="checkbox" name="taxa" [(ngModel)]="taxa" (change)="alteradoOpcaoTaxa()" >
+    <label style="margin-left: 8px;">Despesa tipo taxa</label>
+  </div>
+  <div class="col-auto" *ngIf="taxa">
+    <p-dropdown [options]="categoriaRecebimentos" [(ngModel)]="categoriaRecebSelecionada" placeholder="Selecione a categoria de recebimento" 
+         optionLabel="descricao" [showClear]="true"></p-dropdown>
+  </div>
+</div>
+
+
+
+<hr />
+
+<div class="row">
+    <div class="col-12" id="barraBtn">
+
+
+        <button pButton type="button" class="btnOp ui-button-warning" (click)="goback()"
+        icon="fa fa-ban" iconPos="left" label="Fechar"></button>
+
+
+        <button pButton type="button" class="btnOp ui-button-success" (click)="salvar()"
+        icon="fa fa-floppy-o" iconPos="left" label="Salvar"></button>
+
+      </div>
+  </div>
+
+<hr />
+
+
+
+  <!-- fecha container -->
+</div>
+
+
+
+
+
+
+
+
+<!-- cad nova categoria de lançamento-->
+<div [class]="classeContainer" *ngIf="modoNovacategoria">
+
+  <h4>Cadastro de nova categoria de lançamento</h4>
+   <hr />
+    <div class="row">
+       <div class="col-12 form-group">
+         <input type="text" class="form-control"  [(ngModel)]="novaCategoria.descricao"
+               placeholder="Descrição da categoria" name="descricao" />
+       </div>
+    </div>
+   <hr />
+  <div class="row">
+     <button type="button" class="btn btn-sm btn-warning btn-categoria" (click)="cancelaModoNovaCategoria()">
+      <i class="fa fa-ban" aria-hidden="true"></i>
+       Cancelar
+     </button>
+     <button type="button" class="btn btn-sm btn-success btn-categoria" (click)="salvarCategoria()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      Salvar
+     </button>
+  </div>
+
+</div>
+<!-- fim cad nova categoria -->
+
+
+
+
+
+
+
+<div *ngIf="load" class="loadcss">
+    <img src="./../../../assets/img/load2.gif">
+  </div>

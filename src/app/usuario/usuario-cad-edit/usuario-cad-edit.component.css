@@ -1,0 +1,64 @@
+#titulo {
+  font-weight: 300;
+}
+.painel {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.719);
+  margin-bottom: 20px;
+}
+.cor-novo {
+  background-color: rgb(203, 222, 247);
+  padding: 20px;
+}
+.cor-edit {
+  background-color: rgb(243, 236, 176);
+  padding: 20px;
+}
+#count-obs {
+  font-size: 11px;
+}
+.top-15 {
+  margin-top: 15px;
+}
+.center {
+  text-align: center;
+}
+.table-p {
+  overflow: auto;
+}
+.col-role {
+  width: 450px;
+}
+.col-botao {
+  width: 50px;
+}
+#btn-salvar {
+  margin-right: 15px;
+}
+#lb-altera-senha {
+  margin-right: 15px;
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 640px) {
+
+  .titulo {
+    font-size: 15px;
+  }
+  .cor-novo {
+    padding: 10px;
+  }
+  .cor-edit {
+    padding: 10px;
+  }
+
+}
+
+

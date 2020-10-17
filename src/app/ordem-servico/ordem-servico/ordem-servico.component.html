@@ -1,0 +1,436 @@
+
+<div class="container-ordem-servico alturaMinima" *ngIf="semPermissao">
+
+  <div style="width: 300px; margin: 0 auto; text-align: center;">
+    <h6 class="text-danger">SEM PERMISSÃO</h6>
+ </div>
+
+</div>
+
+
+<div class="container-ordem-servico alturaMinima"
+     *ngIf="!modeAddOs && !modeEditarOs && !modeEditServico && !modeNovoServico && !semPermissao">
+
+
+
+<!--botão nova OS para o cliente selecionado-->
+<div class="row">
+    <div class="col-12" *ngIf="!modeAddOs">
+      <button pButton label="Adicionar OS" icon="fa fa-plus" (click)="addOsMode()"></button>
+    </div>
+</div>
+
+
+<hr />
+
+<div class="row">
+   <div class="col-auto form-group">
+     <input type="number" min="2000" max="2100" class="form-control" [(ngModel)]="anoOs">
+   </div>
+    <div class="col-auto form-group">
+      <button pButton label="Consultar" icon="fa fa-search" (click)="buscarOS()"></button>
+   </div>
+</div>
+
+<!-- caso o cliente não tenha OS avisa o usuário com a mensagem abaixo-->
+<div class="row" *ngIf="semOs && !modeAddOs">
+     <div class="col-12">
+        <h5 id="semOrdemS">O cliente {{cliente.nome}} ainda não possui nenhuma ordem de serviço para ano {{ anoOs }}</h5>
+     </div>
+</div>
+
+
+
+
+
+<!-- exibe as os do cliente caso ele tenha-->
+<div  *ngIf="!semOs" >
+
+ <div class="tabela">
+
+  <p-table [value]="listOsFiltroDTO" [responsive]="true" dataKey="id">
+    <ng-template pTemplate="caption">
+       Listando  {{ listOsFiltroDTO?.length  }} O.S.
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="col-num">Nº O.S.</th>
+            <th class="col-desc">Descrição da O.S.</th>
+            <th class="col-pendenciasv" *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
+              Em Aberto
+            </th>
+            <th class="col-pendenciasv" *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
+              Total Pago
+            </th>
+            <th class="col-pendenciasv" *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
+                Pend. Financeira
+            </th>
+            <th class="col-op center">Opções</th>
+            <th class="col-del-edit center">Alterações</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-os>
+        <tr [class.pendenciaf]="os.pendenciaFinanceira > 0">
+          <td>{{os.numOs}}/{{os.anoOs}}</td>
+          <td>{{os.descricaoOs}}</td>
+          <td *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
+            R$ {{os.total | number: '1.2-2'}}
+          </td>
+          <td *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])" [ngClass]="{'text-success' : os.totalPago > 0}">
+            R$ {{os.totalPago | number: '1.2-2'}}
+          </td>
+
+          <td *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])" >
+            R$ {{os.pendenciaFinanceira | number: '1.2-2'}}
+            </td>
+            <td class="center">
+                <button type="button" class="btn btn-dark btn-sm" (click)="modoNovaTarefa(os)"
+                       pTooltip="Nova tarefa para esta O.S." tooltipPosition="left" id="btn-tarefa">
+                       <i class="fa fa-wrench" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="gotoServicosFinancas(os.idos)"
+                        pTooltip="Financeiro" tooltipPosition="left" id="btn-edit-os" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
+                        <i class="fa fa-money" aria-hidden="true"></i>
+                 </button>
+                 <button type="button" class="btn btn-primary btn-sm" (click)="gotoPrazos(os)"
+                       pTooltip="Prazos" tooltipPosition="left" id="btn-edit-os" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_PRAZO'])">
+                       <i class="fa fa-clock-o" aria-hidden="true"></i>
+                 </button>
+            </td >
+            <td class="center">
+              <button type="button" class="btn btn-warning btn-sm"  (click)="alterarOs(os)"
+                      pTooltip="Edita esta O.S." tooltipPosition="left" id="btn-edit-os">
+                     <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+              <button type="button" (click)="confirmarExclusao(os)" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_OS_EXCLUI'])"
+                  class="btn btn-danger btn-sm" pTooltip="Exclui esta O.S." tooltipPosition="left" id="btn-exclui-os">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+ </div>
+
+
+<!--
+<div id="accordion" >
+
+    <div class="card" *ngFor="let oss of listaOs; let i = index">
+      <div class="card-header" id="heading{{ i }}">
+         <button attr.data-target="#List-{{ i }}" data-toggle="collapse" class="btn btn-info collapsed btnColapse"
+                 aria-expanded="false" attr.aria-controls="List-{{ i }}" (click)="tabOs(oss)"
+                 [ngStyle]="{'background-color': oss.statusOs?.cor}">
+                 <span class="spanColapse"> OS Nº:</span> <span class="spanColapseOs"> {{oss.numOs}}/{{oss.anoOs}} </span>
+
+                  <span class="spanColapse">  Assunto:</span> <span class="spanColapseOs">{{ oss.local }}</span>
+
+                  <span class="spanColapse"> Status O.S.: </span> <span class="spanColapseOs">{{ oss.statusOs.nome }}</span>
+
+         </button>
+       </div>
+
+          <div id="List-{{ i }}" class="collapse" attr.aria-labelledby="heading{{ i }}"  data-parent="#accordion">
+            <div class="card-body">
+                <span *ngIf="oss.obs && oss.obs != '' && oss.obs != undefined;">
+                    <span class="spanColapse"> Obs: </span>
+                    <span class="spanColapseOs" >{{ oss.obs }}</span>
+                 </span>
+
+                 <hr />
+              inicio corpo do colapse
+
+                <button type="button" (click)="exibirFormAddServico(oss)"
+                   class="btn btn-dark form-control-sm"><i class="fa fa-plus" aria-hidden="true"></i>
+                  Adicionar novo serviço
+                </button>
+
+                <button type="button" (click)="alterarOs(oss)"
+                 class="btn btn-primary form-control-sm btnAlterarOS"><i class="fa fa-pencil" aria-hidden="true"></i>
+                   Alterar O.S. {{ oss.numOs}} / {{ oss.anoOs }}
+                </button>
+
+                <button type="button" (click)="confirmarExclusao(oss)" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_OS_EXCLUI'])"
+                  class="btn btn-danger form-control-sm"><i class="fa fa-trash" aria-hidden="true"></i>
+                  Excluir O.S. {{ oss.numOs}} / {{ oss.anoOs }}
+                </button>
+
+                <hr />
+
+                <p-table [value]="listServico" [responsive]="true" *ngIf="listServico?.length > 0">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th class="colDesc">Descrição</th>
+                            <th class="colValor">Valor</th>
+                            <th class="colfp">Forma Pagamento</th>
+                            <th class="colVenc">Vencimento</th>
+                            <th class="colVenc">Pagamento</th>
+                            <th class="colObs">Obs</th>
+                            <th class="colStatus">Status</th>
+                            <th class="colOp">Opções</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-serv>
+                        <tr [class.devedorVencido]="serv.pago == 0 && serv.dataVencimento.getTime() < dtNow.getTime()
+                        && serv.dataVencimento.getTime() > semData"
+                        [class.devedor]="serv.pago == 0 && serv.dataVencimento.getTime() >= dtNow.getTime()"
+                        [class.pago]="serv.pago == 1 && serv.dataVencimento.getTime() > semData">
+                            <td> {{ serv.descricao }} </td>
+                            <td> R$ {{ serv.valor | number: '1.2-2' }} </td>
+                            <td> {{ serv.formaPagamento }} </td>
+                            <td>
+                              <span *ngIf="serv.dataVencimento.getTime() > semData">
+                                  {{ serv.dataVencimento | date: 'dd/MM/yyyy' }}
+                              </span>
+                            </td>
+                            <td>
+                                <span *ngIf="serv?.pago == 1 && serv?.dataPagamento.getTime() > semData">
+                                  {{ serv.dataPagamento | date: 'dd/MM/yyyy' }}
+                                </span>
+                            </td>
+                            <td> {{ serv.obs }} </td>
+                            <td>
+                              <span *ngIf="serv.dataVencimento.getTime() > semData && serv.pago === 0" id="npago"> Aberto</span>
+                              <span *ngIf="serv.dataVencimento.getTime() > semData && serv.pago === 1" id="pago"> Pago</span>
+                            </td>
+                            <td id="LinhaOpc">
+
+                                <a href="javascript:;" *ngIf="serv.pago === 0 && serv.dataVencimento.getTime() > semData"
+                                   (click)="serv.pago = 1; definePagoOuDevedor(serv);"
+                                   pTooltip="Definir como pago" tooltipPosition="top">
+                                   <span class="fa fa-money" id="iconDefPago"></span>
+                                </a>
+
+                                <a href="javascript:;" *ngIf="serv.dataVencimento.getTime() > semData && serv.pago === 1"
+                                   (click)="serv.pago = 0; definePagoOuDevedor(serv)"
+                                   pTooltip="Definir como devedor" tooltipPosition="top">
+                                   <span class="fa fa-share-square-o" id="iconDefDevedor"></span>
+                                </a>
+
+                                <a href="javascript:;" (click)="ativarModoEditarServico(serv)"
+                                   pTooltip="Editar Serviço" tooltipPosition="top" id="editar">
+                                    <span class="fa fa-pencil icon"></span>
+                                </a>
+
+                                <a href="javascript:;"  (click)="confirmarExclusaoServico(serv)"
+                                    *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])"
+                                     pTooltip="Excluir Serviço" tooltipPosition="top">
+                                    <span class="fa fa-trash-o icon" id="iconExcluir"></span>
+                                </a>
+
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+
+
+              fim do corpo do colapse
+            </div>
+          </div>
+      </div>
+</div>
+-->
+</div>
+</div><!--fecha container-->
+
+
+
+<!-- form para adicionar nova tarefa-->
+<p-dialog [header]="headerDialogTarefa" [(visible)]="novaTarefa" [modal]="true" [style]="{width: '45vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <div style="height: 40px;">
+    <div class="alert alert-warning" role="alert" [@comTransacao]
+        *ngIf="erroNovaTarefa?.length > 0" (click)="alertaTarefaOff()">
+      {{ erroNovaTarefa }}
+    </div>
+  </div>
+     <hr />
+      <div class="row">
+        <div class="col-12 form-group">
+          <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="idtecnicoTarefa" >
+            <option selected value="0" >Selecione o técnico da tarefa</option>
+            <option *ngFor="let t of tecnicosDto" value="{{ t.id }}">{{ t.nome }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 form-group">
+          <textarea type="text" class="form-control form-control-sm" maxlength="255"
+              placeholder="Descrição da tarefa" [(ngModel)]="tarefa.descricao">
+
+          </textarea>
+          <div>Caracteres restantes {{ 255 - tarefa?.descricao?.length }}</div>
+        </div>
+      </div>
+    <hr />
+    <button type="button" class="btn btn-sm btn-warning" (click)="cancelaNovaTarefa()" id="btn-cancelar-tarefa">
+      <i class="fa fa-ban" aria-hidden="true"></i>
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-sm btn-success" (click)="salvarNovaTareva()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      Salvar
+    </button>
+</p-dialog>
+
+
+
+
+
+<!-- load-->
+<div *ngIf="load" class="loadcss">
+   <img src="./../../../assets/img/load2.gif">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- formulario para adicionar nova OS-->
+<div *ngIf=" modeAddOs || modeEditarOs" class="formAddOs">
+  <div>
+    <h5>{{  tituloOsForm }}</h5>
+    <hr />
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <label>Descrição:</label>
+            <input type="text"  [(ngModel)]="os.local" placeholder="Entre com a descrição"
+                   class="form-control form-control-sm" name="localdoc"/>
+          </div>
+       <div class="col-12 col-md-4">
+          <label>Data Início:</label>
+          <div>
+           <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+           [(ngModel)]="os.dataInicio" [showIcon]="true" dateFormat="dd/mm/yy"
+           [locale]="br.br"></p-calendar>
+          </div>
+       </div>
+
+        <div class="col-12 col-md-4">
+            <p-checkbox [(ngModel)]="alertaOs" binary="true" (onChange)="ativaAlertaOs()" name="aletOs"></p-checkbox>
+          <label id="lbDataAlerta">Data Alerta:</label>
+          <div>
+           <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2050"
+            [(ngModel)]="os.dataAlerta" [minDate]="dataNow" [locale]="br.br"
+            [showIcon]="true" [disabled]="!alertaOs" dateFormat="dd/mm/yy"></p-calendar>
+          </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+      <!-- drop down tecnico -->
+      <div class="col-12 col-md-6" *ngIf="listTecnico?.length > 0">
+        <label id="lbTecnico">Técnico</label>
+        <div>
+        <p-dropdown [options]="listTecnico" [(ngModel)]="tecnico"
+           placeholder="Selecione um técnico" optionLabel="nome" [showClear]="true">
+       </p-dropdown>
+       <button pButton  (click)="irCadTecnico()" pTooltip="Adicionar novo técnico"
+                 icon="fa fa-plus" id="btnCadTecnico" tooltipPosition="left"></button>
+      </div>
+      </div>
+      <div class="col-12 col-md-6" *ngIf="listTecnico?.length == 0">
+        <h5>Nenhum técnico cadastrado</h5>
+        <button pButton  (click)="irCadTecnico()" pTooltip="Adicionar novo técnico"
+        icon="fa fa-plus" id="btnCadTecnico" tooltipPosition="left"></button>
+      </div>
+
+      <!-- drop down status os  -->
+      <div class="col-12 col-md-6" *ngIf="listStatusOs?.length > 0">
+          <label id="lbTecnico">Status da O.S.</label>
+          <div>
+          <p-dropdown [options]="listStatusOs" [(ngModel)]="statusOs"
+             placeholder="Selecione um Status" optionLabel="nome" [showClear]="true">
+         </p-dropdown>
+         <button pButton  (click)="irCadStatus()" pTooltip="Adicionar novo Status"
+                   icon="fa fa-plus" id="btnCadStatus" tooltipPosition="left"></button>
+        </div>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="listStatusOs?.length == 0">
+          <h5>Nenhum Status de O.S. cadastrado</h5>
+          <button pButton  (click)="irCadStatus()" pTooltip="Adicionar novo Status"
+                   icon="fa fa-plus" id="btnCadStatus" tooltipPosition="left"></button>
+        </div>
+    </div>
+
+   <hr />
+
+
+<!--
+    <div class="row top10">
+        <div class="col-12">
+        <label>Ultima OS Cadastrada: <b> {{ultimoNumOs}} </b> </label>
+        </div>
+    </div>
+-->
+
+
+  <div class="row top10">
+
+      <div class="col-12 col-md-4" *ngIf="modeAddOs">
+          <label>O.S. Nº: <b> {{ultimoNumOs}} </b> </label>
+        <!--
+          <form class="form-inline">
+            <div class="form-group">
+              <label>Nº Os</label>
+            </div>
+            <div class="form-group">
+             <label id="lbAnoOs">Ano Os</label>
+            </div>
+          </form>
+         <form class="form-inline">
+            <input type="number"  [(ngModel)]="os.numOs" placeholder="número da OS" id="numOss" min="0" max="10000"
+                      class="form-control form-control-sm" name="osNumOs" size="11" [disabled]="modeEditarOs">
+
+             <label>/</label>
+
+            <input type="number"  [(ngModel)]="os.anoOs"  id="anoOss" min="1970" [max]="anoMax"
+                    class="form-control form-control-sm" name="osAnoOs" [disabled]="modeEditarOs">
+          </form>
+         -->
+        </div>
+
+
+     <div class="col-12 col-md-8">
+       <label id="lbObs">Observações</label>
+       <div>
+         <textarea rows="3" cols="40" pInputTextarea [(ngModel)]="os.obs"  name="obsos" maxlength="254"></textarea>
+        </div>
+          caracteres restantes  {{ 254 - os?.obs.length  }}
+     </div>
+  </div>
+
+
+
+  <div class="row top10">
+      <div class="col-12">
+          <button pButton label="Salvar" icon="fa fa-floppy-o" id="btnSalvar"
+             class="ui-button-success" (click)="salvarOs()"></button>
+          <button pButton label="Voltar" icon="fa fa-arrow-left" id="btnCancelar"
+             (click)="cancelarFormOs()" class="ui-button-info"></button>
+      </div>
+  </div>
+  <hr />
+ </div>
+ <!-- fim formulario cad OS -->
+</div>
+
+
+
+
+
+

@@ -1,0 +1,114 @@
+.container-licenca-filtro {
+  background-color: rgb(219, 233, 220);
+  padding: 10px;
+}
+.tabela-licencas{
+  overflow: auto;
+}
+.center {
+  text-align: center;
+}
+
+.col-numero {
+  width: 110px;
+}
+.col-opcao {
+  width: 150px;
+}
+.col-vencimento {
+  width: 120px;
+}
+.col-alerta {
+  width: 120px;
+}
+.paginacao {
+  width: 100%;
+  text-align: center;
+}
+#dt-fim {
+  margin-left: 10px;
+}
+.dt-vencimento {
+  display: inline;
+}
+#btn-consultar {
+  margin-left: 5px;
+}
+
+#btn-arquivo-morto {
+  margin-right: 5px;
+}
+#span-editar {
+  margin-right: 5px;
+}
+
+.vencido > td {
+  background-color: rgb(250, 123, 123);
+}
+.arquivoMortocss > td {
+  background-color: rgb(180, 178, 178);
+  color: #fff;
+}
+#btn-consultar-data {
+  margin-left: 15px;
+}
+
+
+
+
+@media screen and (max-width: 1366px) {
+  .col-cliente {
+    width: 280px;
+  }
+  .col-descricao {
+    width: 300px;
+  }
+}
+
+
+
+
+
+@media screen and (min-width: 900px) {
+
+  .container-licenca-filtro {
+    width: 88%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  #input-consultar {
+    width: 60%;
+  }
+
+}
+
+
+@media screen and (max-width: 899px) {
+
+.container-licenca-filtro {
+  width: 96%;
+  margin: 0 auto;
+  padding: 6px;
+}
+
+#input-consultar {
+  width: 50%;
+}
+
+}
+
+@media screen and (max-width: 640px) {
+
+  .dt-vencimento {
+    display: block;
+  }
+
+  #dt-fim {
+    margin-left: 0px;
+    margin-right: 13px;
+  }
+
+  }
+
+

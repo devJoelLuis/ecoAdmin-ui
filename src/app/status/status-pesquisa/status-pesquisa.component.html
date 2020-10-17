@@ -1,0 +1,124 @@
+<div [class]="containerStatusCliente">
+
+    <p-button  icon="fa fa-arrow-left" (click)="voltarPagina()" label="Voltar" id="btnVoltar" ></p-button>
+
+<hr />
+
+  <div class="row">
+    <div class="col-12"><h4 id="titulo">Consulta de Status do cliente cadastrados</h4></div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="form-group">
+        <input class="form-control form-control-sm text-lowercase" id="consulta"
+        [(ngModel)]="consultaString"  [disabled]="novo || edicao"
+          type="text"  placeholder="Nome do Status" aria-label="Search" (keyup)="onKey($event)"  maxlength=60/>
+        </div>
+   </div>
+   <div class="col-12 col-md-6">
+      <button pButton icon="fa fa-search" label="Consultar"  [disabled]="novo || edicao"
+             id="btnConsultar" (click)="consultar(); page=0" ></button>
+    </div>
+  </div>
+
+  <hr />
+
+  <form autocomplete="off" #f="ngForm" (ngSubmit)="submitNovoStatus(f)">
+  <div class="row btnNovo">
+     <div class="col-12 col-md-6" *ngIf="novo">
+        <div class="form-group" [class.has-danger]="st.invalid && st.touched">
+            <input type="text" maxlength="45" [(ngModel)]="estato.statusCli" id="statusid" #st="ngModel" required
+            class="form-control form-control-sm  text-lowercase" name="statusNovo" placeholder="Novo Status">
+        <!--começo da mensagens de validação-->
+        <div class="form-control-feedback"
+            *ngIf="st.hasError('required') && st.touched">
+                  Informe a descrição do status</div>
+         <div class="form-control-feedback"
+             *ngIf="st.hasError('minlength') && st.dirty">
+                Mínimo de 3 caracteres</div>
+           <!--fim das mensagens de validação do input nome -->
+         </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="!novo">
+      <button pButton type="button" icon="fa fa-plus" label="Adicionar Status" (click)="novoStatus()" ></button>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="novo">
+      <button pButton type="submit" icon="fa fa-floppy-o" label="Salvar"  class="ui-button-success btnSalvar" ></button>
+      <button pButton type="button" icon="fa fa-ban" *ngIf="novo" id="btnCancelar" class="ui-button-warning"
+      label="Cancelar" (click)="cancelarNovo()"></button>
+    </div>
+  </div>
+
+</form>
+
+<hr />
+
+  <div class="table-responsive tabela-empresa">
+
+      <p-table [value]="listStatus" class="table table-striped table-bordered"
+      [responsive]="true" *ngIf="listStatus?.length > 0">
+          <ng-template pTemplate="caption">
+              Lista de status de cliente
+          </ng-template>
+
+          <ng-template pTemplate="header" >
+           <tr>
+             <th class="colstatus">
+                 Nome
+             </th>
+             <th class="acao">Ações</th>
+           </tr>
+          </ng-template>
+
+           <ng-template pTemplate="body" let-st>
+             <tr>
+               <td>
+                 <div  *ngIf="!st.edit">{{ st.statusCli }} </div>
+                 <div *ngIf="st.edit">
+                    <input type="text" maxlength="45" [(ngModel)]="estato.statusCli" id="statusnovo" #stn="ngModel" required
+                    class="form-control form-control-sm  text-lowercase" name="stedit" (keyup)="editStatusKey($event, st)">
+                </div>
+
+              </td>
+               <td id="acao">
+
+                 <div *ngIf="!st.edit">
+                    <a href="javascript:;" pTooltip="Editar Status" tooltipPosition="top" *ngIf="!novo && !edicao">
+                      <span class="fa fa-pencil icon" (click)="editarStatus(st)"></span>
+                    </a>
+                    <a href="javascript:;" pTooltip="Excluir Status" tooltipPosition="top"
+                        *ngIf="!novo && !edicao && auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_STATUS_CLIENTE_EXCLUI'])">
+                      <span class="fa fa-trash-o icon" id="iconExcluir" (click)="confirmarExclusao(st.statusCli, st.id)" ></span>
+                    </a>
+                  </div>
+                  <div *ngIf="st.edit">
+
+                      <button pButton type="button" icon="fa fa-floppy-o" (click)="salvarEdicao(st)"
+                       class="ui-button-success btnSalvar" pTooltip="Salvar Alteração" ></button>
+
+                      <button pButton type="button" id="tbBtnCancel" icon="fa fa-ban" class="ui-button-warning"
+                       (click)="cancelarEdicao(st)" pTooltip="Cancelar" ></button>
+
+                  </div>
+               </td>
+             </tr>
+            </ng-template>
+
+
+      </p-table>
+
+  </div>
+  <div class="row top 10" *ngIf="totalRegistro > size">
+      <div class="col-12">
+        <p-paginator [rows]="size" [totalRecords]="totalRegistro" [rowsPerPageOptions]="[10,20,30,40]"
+        (onPageChange)="paginate($event)"></p-paginator>
+      </div>
+  </div>
+
+  <hr *ngIf="listStatus?.length > 0" />
+
+</div><!--Fecha container-->
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>
