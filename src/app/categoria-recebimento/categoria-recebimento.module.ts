@@ -11,12 +11,14 @@ import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {TooltipModule} from 'primeng/tooltip';
 import {PaginatorModule} from 'primeng/paginator';
+import {DropdownModule} from 'primeng/dropdown';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { HistoricoCatRecebimentoComponent } from './historico-cat-recebimento/historico-cat-recebimento.component';
+import { TranferenciaComponent } from './tranferencia/tranferencia.component';
 
 @NgModule({
-  declarations: [CategoriaRecebimentoComponent, HistoricoCatRecebimentoComponent],
+  declarations: [CategoriaRecebimentoComponent, HistoricoCatRecebimentoComponent, TranferenciaComponent],
   imports: [
     CommonModule,
     CategoriaRecebimentoRoutingModule,
@@ -26,7 +28,8 @@ import { HistoricoCatRecebimentoComponent } from './historico-cat-recebimento/hi
     DialogModule,
     TooltipModule,
     CurrencyMaskModule,
-    PaginatorModule
+    PaginatorModule,
+    DropdownModule
   ]
 })
 export class CategoriaRecebimentoModule { }

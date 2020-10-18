@@ -23,8 +23,10 @@
                    routerLink="/fornecedor">Fornecedor</button>
               <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_USUARIO'])"
                      routerLink="/usuarios">Usuário</button>
-              <button class="dropdown-item" href="javascript:;" [disabled]="!auth.temQualquerPermissao(['ROLE_ADMIN'])"
-                     routerLink="/fluxocaixa">Fluxo de caixa</button>       
+              <button class="dropdown-item" href="javascript:;" *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN'])"
+                     routerLink="/fluxocaixa">Fluxo de caixa</button>  
+              <button class="dropdown-item" href="javascript:;" *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN'])"
+                     routerLink="/categoriasRecebimento/transferencia">Transferência de saldo</button>               
 
 
               <!--<div class="dropdown-divider"></div>

@@ -1,0 +1,46 @@
+.container-transferencia {
+    padding: 20px;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+.container-transferencia .divs {
+   display: flex;
+   width: 100%;
+   align-items: center;
+
+   background: #fff;
+   padding: 8px;
+   border-radius: 5px;
+   margin-bottom: 10px;
+}
+.container-transferencia .divs h4 {
+    margin: 0 auto;
+    font-weight: 300;
+}
+.formulario {
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#valor {
+    width: 160px;
+}
+
+
+
+@media screen and (max-width: 640px) {
+  
+    .container-transferencia .divs {
+        flex-direction: column;
+    }
+    .container-transferencia .divs button {
+       margin-bottom: 10px;
+    }
+    .formulario label {
+        margin-top: 15px;
+    }
+  
+}

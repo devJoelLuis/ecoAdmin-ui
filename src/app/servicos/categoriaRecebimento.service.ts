@@ -1,3 +1,4 @@
+import { Transferencia } from './../model/transferencia.class';
 import { CategoriaRecebimento } from './../model/categoriaRecebimento.class';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -46,6 +47,10 @@ export class CategoriaRecebimentoService {
    //get all
    getAll() {
     return this.http.get(`${this.url}/categoriasRecebimento`);
+   }
+
+   transferencia(t: Transferencia) {
+     return this.http.post(`${this.url}/categoriasRecebimento/transferencia`, t);
    }
 
 

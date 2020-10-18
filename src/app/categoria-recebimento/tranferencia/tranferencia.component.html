@@ -1,0 +1,45 @@
+<div class="container-transferencia alturaMinima bg-color">
+
+  <div class="divs">
+    <button type="button" class="btn btn-sm btn-primary" (click)="voltar()">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      Voltar
+    </button>
+    <h4>Transferência de saldo</h4>
+  </div>
+
+ 
+    <div class="row formulario">
+      <div class="col-auto">
+         <div><label for="provedor">Categoria para retirada:</label></div>
+         <p-dropdown [options]=" categoriasRec" [(ngModel)]="provedor" change (onChange)="changedDropdown()"
+            placeholder="Selecione a categoria" optionLabel="descricao" [showClear]="true"></p-dropdown>
+      </div>
+      <div class="col-12 col-sm-auto">
+        <div><label for="valor">Valor da transferência:</label></div>
+        <input type="text" class="form-control form-control-sm" name="valor" id="valor" [(ngModel)]="transferencia.valor"
+        currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }">
+      </div>
+      <div class="col-12 col-sm-auto">
+        <div><label for="receptora">Categoria para deposito:</label></div>
+        <p-dropdown [options]="categoriasRecDeposito" [(ngModel)]="receptor" placeholder="Selecione a categoria" optionLabel="descricao" [showClear]="true"></p-dropdown>
+      </div>
+     
+    </div>
+
+    <div class="row formulario">
+      <div class="col-12">
+        <button type="button" class="btn btn-sm btn-success" (click)="transferir()">
+          <i class="fa fa-money" aria-hidden="true"></i>
+          Transferir
+        </button>
+      </div>
+    </div>
+
+
+<!-- fecha container -->
+</div>
+
+<div *ngIf="load" class="loadcss">
+  <img src="./../../../assets/img/load2.gif">
+</div>
