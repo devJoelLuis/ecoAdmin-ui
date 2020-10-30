@@ -101,6 +101,7 @@ export class RecebimentoCadEditComponent implements OnInit {
        .toPromise()
        .then( ret => {
         this.load = false;
+        console.log(ret);
         this.totalRecebido = ret['dados'];
        })
        .catch( er => {
@@ -122,6 +123,7 @@ export class RecebimentoCadEditComponent implements OnInit {
           this.recebimento = rec;
           this.lancamento = rec.lancamento;
           this.idCategoriaRec = this.recebimento.categoriaRecebimento.id;
+          this.carregarTotalRecebido();
         })
         .catch( er => {
             this.load = false;
@@ -164,6 +166,15 @@ export class RecebimentoCadEditComponent implements OnInit {
       return;
     }
 
+    // verificar se o valor pago não é maior que o devido
+    //calcular o total recebido
+    console.log(this.totalRecebido);
+    
+    if ((this.totalRecebido + this.recebimento.valor) > this.lancamento.total ) {
+      this.message.add({ severity: 'warn', summary: 'Erro de validação', detail: 'O valor recebido está ultrapassando o devido.', life: 6000 });
+      return;
+    }
+
     this.recebimento.categoriaRecebimento.id = this.idCategoriaRec;
 
     if (this.modoEdicao) {
@@ -181,12 +192,7 @@ export class RecebimentoCadEditComponent implements OnInit {
             this.fimCadEdit.emit();
           });
     } else {
-      // verificar se o valor pago não é maior que o devido
-
-        if ((this.totalRecebido + this.recebimento.valor) > this.lancamento.total ) {
-          this.message.add({ severity: 'warn', summary: 'Erro de validação', detail: 'O valor recebido está ultrapassando o devido.', life: 6000 });
-          return;
-        }
+      
 
       this.recebimento.lancamento.id = this.lancamento.id;
       this.load = true;
@@ -206,6 +212,10 @@ export class RecebimentoCadEditComponent implements OnInit {
 
 
   }//fecha salvar recebimento
+
+
+
+
 
 
 

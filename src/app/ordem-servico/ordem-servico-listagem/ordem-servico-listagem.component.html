@@ -84,6 +84,7 @@
               <th class="col-num">Nº O.S.</th>
               <th class="col-cliente">Nome do cliente</th>
               <th class="col-desc">Descrição da O.S.</th>
+              <th style="width: 120px;">Total lançado</th>
               <th class="col-pendenciasv" *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
                 Em Aberto
               </th>
@@ -102,6 +103,9 @@
               <td>{{os.numOs}}/{{os.anoOs}}</td>
               <td>{{os.nomeCliente }}</td>
               <td>{{os.descricaoOs}}</td>
+              <td >
+                  R$ {{os.totalLancado | number: '1.2-2'}}
+              </td>
               <td *ngIf="auth.temQualquerPermissao(['ROLE_ADMIN', 'ROLE_FINANCAS'])">
                 R$ {{os.total | number: '1.2-2'}}
               </td>
