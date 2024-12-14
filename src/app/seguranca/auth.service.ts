@@ -39,7 +39,7 @@ export class AuthService {
 
     const headers = new HttpHeaders()
              .append('Content-Type', 'application/x-www-form-urlencoded')
-             .append('Authorization', 'Basic YnJvd3NlcjpKZDVzRDFFcTRnS3RMZWYwY0NUZ0ZUNXdTRUUxaDdmcmJiYWZSZkxNQlg3TTFkRFRm');
+             .append('Authorization', 'Basic ');
 
     return this.http.post<any>(`${this.url}/oauth/token`, body, { headers, withCredentials: true })
               .toPromise()
@@ -53,26 +53,7 @@ export class AuthService {
               });
   }
 
-/*
- refreshToken() {
-    const body =`grant_type=refresh_token`;
-    const headers = new HttpHeaders()
-             .append('Content-Type', 'application/x-www-form-urlencoded')
-             .append('Authorization', 'Basic YnJvd3NlcjpKZDVzRDFFcTRnS3RMZWYwY0NUZ0ZUNXdTRUUxaDdmcmJiYWZSZkxNQlg3TTFkRFRm');
-    return this.http.post(`${this.url}/oauth/token`, body, { headers, withCredentials: true })
-               .toPromise()
-               .then( ret => {
-                 console.log('Token renovado');
-                 this.armazenarToken(ret['access_token']);
-                 return Promise.resolve(null);
-               })
-               .catch( er => {
-                 this.erroHandler.handler(er);
-                 localStorage.removeItem('token');
-                 return Promise.resolve(null);
-               });
-    }
-  */
+
 
     logout() {
       this.http.delete(`${this.url}/tokens/logout`, { withCredentials: true })
@@ -96,29 +77,7 @@ export class AuthService {
       this.jwtPayload = null;
     }
 
- /*
-   estaLogado(): boolean {
-     if(!localStorage.getItem('token')) {
-       return false;
-     }
-     if(this.jwtHelper.isTokenExpired(localStorage.getItem('token'))) {
-       return false;
-     }
-     return true;
-   }
 
-   isExpired(): boolean {
-
-    if (!localStorage.getItem('token')) {
-      return false;
-    }
-
-   if(this.jwtHelper.isTokenExpired(localStorage.getItem('token'))) {
-      return true;
-    }
-    return false;
-   }
-    */
 
   private armazenarToken(token: string) {
    this.jwtPayload = this.jwtHelper.decodeToken(token);
@@ -163,7 +122,7 @@ obterNovoAccessToken(): Promise<void> {
 
   const headers = new HttpHeaders()
    .append('Content-Type', 'application/x-www-form-urlencoded')
-   .append('Authorization', 'Basic YnJvd3NlcjpKZDVzRDFFcTRnS3RMZWYwY0NUZ0ZUNXdTRUUxaDdmcmJiYWZSZkxNQlg3TTFkRFRm');
+   .append('Authorization', 'Basic ');
    const body = 'grant_type=refresh_token';
 
    return this.http.post<any>(`${this.url}/oauth/token`, body,
